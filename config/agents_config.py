@@ -18,8 +18,9 @@ def get_available_provider():
     print(os.environ.get("AWS_BEARER_TOKEN_BEDROCK"), "-------------------------------")
     return {
         "model_provider": "bedrock",
-        "model_name": "amazon.nova-pro-v1:0",
+        "model_name": "amazon.nova-premier-v1:0",
     }
+
 
 # Agent Configuration with dynamic provider selection
 provider_config = get_available_provider()
@@ -80,17 +81,17 @@ Focus on creating educational content that is accessible, well-organized, and pe
         "max_retries": 3,
         "timeout_seconds": 180,  # Increased timeout for complex analysis
         "failure_threshold": 5,
-        "recovery_timeout": 60
+        "recovery_timeout": 60,
     },
     "learning_objectives": {
-        "name": "Learning Objectives Agent", 
+        "name": "Learning Objectives Agent",
         "description": "Defines educational goals and learning outcomes",
         "system_prompt": """You are a learning objectives agent specialized in creating educational goals. 
         Your role is to analyze content and generate clear, measurable learning objectives aligned with pedagogical frameworks.""",
         "max_retries": 3,
         "timeout_seconds": 120,
         "failure_threshold": 5,
-        "recovery_timeout": 60
+        "recovery_timeout": 60,
     },
     "assessment": {
         "name": "Assessment Agent",
@@ -100,7 +101,7 @@ Focus on creating educational content that is accessible, well-organized, and pe
         "max_retries": 3,
         "timeout_seconds": 120,
         "failure_threshold": 5,
-        "recovery_timeout": 60
+        "recovery_timeout": 60,
     },
     "visualization": {
         "name": "Visualization Agent",
@@ -110,7 +111,7 @@ Focus on creating educational content that is accessible, well-organized, and pe
         "max_retries": 3,
         "timeout_seconds": 120,
         "failure_threshold": 5,
-        "recovery_timeout": 60
+        "recovery_timeout": 60,
     },
     "narrative": {
         "name": "Narrative Agent",
@@ -120,18 +121,20 @@ Focus on creating educational content that is accessible, well-organized, and pe
         "max_retries": 3,
         "timeout_seconds": 120,
         "failure_threshold": 5,
-        "recovery_timeout": 60
-    }
+        "recovery_timeout": 60,
+    },
 }
+
 
 def get_agent_config(agent_type: str) -> Dict[str, Any]:
     """Get configuration for a specific agent type"""
     if agent_type not in PEDAGOGY_AGENTS:
         raise ValueError(f"Unknown agent type: {agent_type}")
-    
+
     config = AGENT_CONFIG.copy()
     config.update(PEDAGOGY_AGENTS[agent_type])
     return config
+
 
 def get_workflow_config() -> Dict[str, Any]:
     """Get workflow configuration"""

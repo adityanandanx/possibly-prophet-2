@@ -1,0 +1,95 @@
+{
+  "storage_id": "a58d110b-8aa9-4563-a1d8-2289a1de57f0",
+  "content_type": "text",
+  "content_hash": "9a174566a784503d56e96bddc99ff48686eb4caa92ed8e0ff34f14b894423513",
+  "stored_at": "2026-01-29T13:15:11.460955",
+  "generation_id": "a9604d46-e869-4745-bda9-38e2da388dfe",
+  "original_metadata": {
+    "topic": "mathematics",
+    "difficulty_level": "beginner",
+    "target_audience": "high school students",
+    "learning_goals": [
+      "vector addition",
+      "vector subtraction",
+      "vector dot product"
+    ],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 47,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 47
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "Vectors 3d, vector addition, vector subtraction",
+        "warnings": [
+          "Content may not be educational (score: 0.00). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.0,
+          "educational_indicators": 0,
+          "total_words": 6,
+          "academic_score": 0.0,
+          "quality_score": 0.533,
+          "word_count": 6,
+          "sentence_count": 1,
+          "character_count": 47,
+          "vocabulary_diversity": 0.5,
+          "average_word_length": 7.0,
+          "average_sentence_length": 6.0,
+          "complexity_ratio": 0.5,
+          "has_structure": true,
+          "has_numerical_data": false
+        },
+        "content_hash": "3e2476cf79c37821"
+      }
+    ],
+    "all_warnings": [
+      "Content may not be educational (score: 0.00). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.0,
+      "educational_indicators": 0,
+      "total_words": 6,
+      "academic_score": 0.0,
+      "quality_score": 0.533,
+      "word_count": 6,
+      "sentence_count": 1,
+      "character_count": 47,
+      "vocabulary_diversity": 0.5,
+      "average_word_length": 7.0,
+      "average_sentence_length": 6.0,
+      "complexity_ratio": 0.5,
+      "has_structure": true,
+      "has_numerical_data": false
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "a9604d46-e869-4745-bda9-38e2da388dfe",
+    "processing_start": "2026-01-29T13:15:11.460929",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 47,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 6,
+    "character_count": 47,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

@@ -556,12 +556,12 @@ class PedagogyWorkflow:
                     "questions": [
                         {
                             "question": "What are the main concepts covered in this content?",
-                            "type": "open_ended",
+                            "question_type": "open_ended",
                             "points": 10
                         },
                         {
                             "question": "How would you apply this knowledge in practice?",
-                            "type": "open_ended", 
+                            "question_type": "open_ended", 
                             "points": 15
                         }
                     ],
@@ -571,7 +571,7 @@ class PedagogyWorkflow:
             
         except Exception as e:
             logger.warning(f"Error extracting assessments: {str(e)}")
-            return [{"type": "quiz", "questions": [], "rubric": "Basic assessment"}]
+            return [{"type": "quiz", "title": "Basic Assessment", "questions": [], "rubric": "Basic assessment"}]
     
     def _extract_animations(self, result: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Extract animation specifications from visualization agent"""
@@ -675,7 +675,7 @@ class PedagogyWorkflow:
                 if len(question_text) > 10:
                     questions.append({
                         "question": question_text,
-                        "type": "open_ended",
+                        "question_type": "open_ended",
                         "points": 10
                     })
         

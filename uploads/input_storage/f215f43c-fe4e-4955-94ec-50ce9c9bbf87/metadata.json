@@ -1,0 +1,91 @@
+{
+  "storage_id": "f215f43c-fe4e-4955-94ec-50ce9c9bbf87",
+  "content_type": "text",
+  "content_hash": "089ac57e2ee300a3aa0c703f902e86d9b1504fe4f6fe21a5e66845c7ae7a16a8",
+  "stored_at": "2026-01-29T12:49:38.464868",
+  "generation_id": "5ee5ed14-a9f6-4254-b7b8-184f7680f1e4",
+  "original_metadata": {
+    "topic": "mathematics",
+    "difficulty_level": "beginner",
+    "target_audience": "students",
+    "learning_goals": [],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 34,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 34
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "explain what is 2+2 in mathematics",
+        "warnings": [
+          "Content may not be educational (score: 0.00). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.0,
+          "educational_indicators": 0,
+          "total_words": 6,
+          "academic_score": 0.0,
+          "quality_score": 0.484,
+          "word_count": 6,
+          "sentence_count": 1,
+          "character_count": 34,
+          "vocabulary_diversity": 0.833,
+          "average_word_length": 4.83,
+          "average_sentence_length": 6.0,
+          "complexity_ratio": 0.333,
+          "has_structure": false,
+          "has_numerical_data": true
+        },
+        "content_hash": "089ac57e2ee300a3"
+      }
+    ],
+    "all_warnings": [
+      "Content may not be educational (score: 0.00). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.0,
+      "educational_indicators": 0,
+      "total_words": 6,
+      "academic_score": 0.0,
+      "quality_score": 0.484,
+      "word_count": 6,
+      "sentence_count": 1,
+      "character_count": 34,
+      "vocabulary_diversity": 0.833,
+      "average_word_length": 4.83,
+      "average_sentence_length": 6.0,
+      "complexity_ratio": 0.333,
+      "has_structure": false,
+      "has_numerical_data": true
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "5ee5ed14-a9f6-4254-b7b8-184f7680f1e4",
+    "processing_start": "2026-01-29T12:49:38.464837",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 34,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 6,
+    "character_count": 34,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}
