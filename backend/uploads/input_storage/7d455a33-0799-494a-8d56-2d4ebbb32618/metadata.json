@@ -1,0 +1,75 @@
+{
+  "storage_id": "7d455a33-0799-494a-8d56-2d4ebbb32618",
+  "content_type": "url",
+  "content_hash": "31e52b472e9450275c341b7a9f03570ca17664ed499bc27af1473ca3e08752e0",
+  "stored_at": "2026-01-29T18:34:10.130550",
+  "generation_id": "ced33fc5-b108-4fd2-ba9b-86aa36764fb2",
+  "original_metadata": {
+    "source_url": "https://github.com/bigsparsh/bigportfolio",
+    "topic": "sadasd",
+    "difficulty_level": "intermediate",
+    "target_audience": "University",
+    "learning_goals": [],
+    "original_scraped_length": 581,
+    "processed_content_length": 581,
+    "scraping_timestamp": "2026-01-29T18:34:10.130500"
+  },
+  "validation_result": {
+    "url_validation": {
+      "is_valid": true,
+      "sanitized_content": null,
+      "warnings": [],
+      "errors": [],
+      "metadata": {
+        "domain": "github.com",
+        "protocol": "https",
+        "path": "/bigsparsh/bigportfolio",
+        "has_query": false,
+        "has_fragment": false
+      },
+      "content_hash": null
+    },
+    "content_validation": {
+      "is_valid": true,
+      "sanitized_content": "What is this project? Setting up this project \u2022 Clone this repository \u2022 Runnpm installto install all the dependencies \u2022 Runnpm run devto start the development server \u2022 Openhttp://localhost:3000in your browser Use your own connection string for the dizzle orm, mine is based on postgreSQL dialect from neon db. TODOS \u2022 Make the frontend \u2022 Add animations \u2022 Make the site responsive (sort of completed) \u2022 Deploy on vercel \u2022 Add the domainbigSparsh \u2022 Add the ORM and define schema \u2022 Define the backend \u2022 Make the routes \u2022 Connect the backend and frontend \u2022 Final touches \u2022 Fix any bugs",
+      "warnings": [
+        "Content may not be educational (score: 0.00). Consider adding more educational context."
+      ],
+      "errors": [],
+      "metadata": {
+        "educational_score": 0.0,
+        "educational_indicators": 0,
+        "total_words": 101,
+        "academic_score": 0.0,
+        "quality_score": 0.413,
+        "word_count": 101,
+        "sentence_count": 3,
+        "character_count": 581,
+        "vocabulary_diversity": 0.564,
+        "average_word_length": 4.76,
+        "average_sentence_length": 33.67,
+        "complexity_ratio": 0.228,
+        "has_structure": false,
+        "has_numerical_data": false
+      },
+      "content_hash": "33e1caba95c6979a"
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "ced33fc5-b108-4fd2-ba9b-86aa36764fb2",
+    "processing_start": "2026-01-29T18:34:10.130521",
+    "url_scraped": true,
+    "content_sanitized": false
+  },
+  "content_length": 581,
+  "storage_version": "1.0",
+  "url_metadata": {
+    "source_url": "What is this project? Setting up this project \u2022 Clone this repository \u2022 Runnpm installto install all the dependencies \u2022 Runnpm run devto start the development server \u2022 Openhttp://localhost:3000in your browser Use your own connection string for the dizzle orm, mine is based on postgreSQL dialect from neon db. TODOS \u2022 Make the frontend \u2022 Add animations \u2022 Make the site responsive (sort of completed) \u2022 Deploy on vercel \u2022 Add the domainbigSparsh \u2022 Add the ORM and define schema \u2022 Define the backend \u2022 Make the routes \u2022 Connect the backend and frontend \u2022 Final touches \u2022 Fix any bugs",
+    "page_title": null,
+    "domain": null,
+    "scraping_timestamp": "2026-01-29T18:34:10.130500",
+    "content_type": null,
+    "response_status": null
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "storage_id": "25adfedb-17c7-4ebd-8d76-a6738128f525",
+  "content_type": "text",
+  "content_hash": "315cfe7e1ed5bf31f9c6ad4f1e5721203f79bae5affdb9dad7d991fcec0adaae",
+  "stored_at": "2026-01-29T19:44:55.214402",
+  "generation_id": "443fabab-5344-47b3-8658-843b896bd897",
+  "original_metadata": {
+    "topic": "Quantum Physics",
+    "difficulty_level": "beginner",
+    "target_audience": "University",
+    "learning_goals": [
+      "Predictability"
+    ],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 2221,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 2221
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "Quantum physics is essentially the universe\u2019s \"instruction manual\" for the incredibly small. While classical physics (Newton\u2019s world) deals with things we can touch and see\u2014like a falling apple\u2014quantum physics governs atoms and subatomic particles, where the rules of reality get... weird.Here is a breakdown of the core concepts that make quantum mechanics both mind-bending and revolutionary.1. The Core Pillars of Quantum WeirdnessWave-Particle DualityIn the quantum world, objects don't like to be pinned down. Light and matter can behave like both a particle (a tiny pellet) and a wave (a ripple in a pond).The Double-Slit Experiment: This famous test showed that electrons\u2014which we think of as little balls of matter\u2014actually create interference patterns like waves when they aren't being watched.SuperpositionImagine a coin spinning on a table. While it\u2019s spinning, it\u2019s not \"Heads\" or \"Tails\"; it\u2019s a blur of both. In quantum terms, a particle exists in all its possible states simultaneously until it is measured.EntanglementEinstein famously called this \"spooky action at a distance.\" When two particles become entangled, their fates are linked. If you measure one particle and find it\u2019s spinning \"Up,\" its partner\u2014even if it's on the other side of the galaxy\u2014will instantly show a correlated state.2. The Math Behind the MysteryTo describe where a particle is and what it\u2019s doing, physicists use the Schr\u00f6dinger Equation. Instead of giving a definite location, it provides a Wave Function, denoted by the Greek letter $\\Psi$ (Psi).The probability of finding a particle in a specific spot is given by:$$P(x,t) = |\\Psi(x,t)|^2$$Note: This means the universe isn't deterministic; it\u2019s probabilistic. We can\u2019t say for sure where an electron is, only where it\u2019s likely to be.3. Why Should You Care?Quantum physics isn't just for labs and chalkboards; it's the reason modern life exists. Without our understanding of quantum mechanics, we wouldn't have:Transistors: The \"brain\" of every smartphone and computer.MRI Machines: Using nuclear magnetic resonance to see inside the body.Lasers: Used in everything from barcode scanners to eye surgery.Atomic Clocks: The tech that makes GPS accurate to within a few inches.",
+        "warnings": [
+          "Content may not be educational (score: 0.00). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.0,
+          "educational_indicators": 0,
+          "total_words": 335,
+          "academic_score": 0.0,
+          "quality_score": 0.494,
+          "word_count": 335,
+          "sentence_count": 26,
+          "character_count": 2221,
+          "vocabulary_diversity": 0.463,
+          "average_word_length": 5.63,
+          "average_sentence_length": 12.88,
+          "complexity_ratio": 0.334,
+          "has_structure": false,
+          "has_numerical_data": true
+        },
+        "content_hash": "fa444e129d104350"
+      }
+    ],
+    "all_warnings": [
+      "Content may not be educational (score: 0.00). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.0,
+      "educational_indicators": 0,
+      "total_words": 335,
+      "academic_score": 0.0,
+      "quality_score": 0.494,
+      "word_count": 335,
+      "sentence_count": 26,
+      "character_count": 2221,
+      "vocabulary_diversity": 0.463,
+      "average_word_length": 5.63,
+      "average_sentence_length": 12.88,
+      "complexity_ratio": 0.334,
+      "has_structure": false,
+      "has_numerical_data": true
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "443fabab-5344-47b3-8658-843b896bd897",
+    "processing_start": "2026-01-29T19:44:55.214378",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 2221,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 335,
+    "character_count": 2221,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

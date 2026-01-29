@@ -1,0 +1,93 @@
+{
+  "storage_id": "1a9778ca-40f7-4b7e-870c-fb9da43e53a1",
+  "content_type": "text",
+  "content_hash": "9e0f06e624a4c505743fb9e93896adde56f02a88aadbec6c8007517036751cfa",
+  "stored_at": "2026-01-29T17:52:41.823341",
+  "generation_id": "bb3a28c2-d437-4b08-9e61-86f2890d59ba",
+  "original_metadata": {
+    "topic": "Machine Learning",
+    "difficulty_level": "intermediate",
+    "target_audience": "University",
+    "learning_goals": [],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 1443,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 1425
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed. Instead of following rigid instructions, machine learning algorithms identify patterns in data and use those patterns to make predictions or decisions. Key concepts include: 1. Supervised Learning: The algorithm learns from labeled training data. Examples include classification (spam detection) and regression (price prediction). The model learns to map inputs to known outputs. 2. Unsupervised Learning: The algorithm finds hidden patterns in unlabeled data. Common techniques include clustering (customer segmentation) and dimensionality reduction (PCA). No predefined labels guide the learning. 3. Neural Networks: Computing systems inspired by biological neural networks. They consist of layers of interconnected nodes that process information. Deep learning uses neural networks with many layers to learn complex representations. 4. Model Training: The process of feeding data to an algorithm so it can learn patterns. This involves splitting data into training and test sets, choosing appropriate metrics, and iterating to improve performance. 5. Overfitting vs Underfitting: Overfitting occurs when a model memorizes training data but fails on new data. Underfitting happens when the model is too simple to capture patterns. The goal is finding the right balance.",
+        "warnings": [
+          "Content may contain inappropriate material",
+          "Content may not be educational (score: 0.01). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.014925373134328358,
+          "educational_indicators": 3,
+          "total_words": 201,
+          "academic_score": 0.0,
+          "quality_score": 0.517,
+          "word_count": 201,
+          "sentence_count": 21,
+          "character_count": 1425,
+          "vocabulary_diversity": 0.547,
+          "average_word_length": 6.09,
+          "average_sentence_length": 9.57,
+          "complexity_ratio": 0.438,
+          "has_structure": false,
+          "has_numerical_data": true
+        },
+        "content_hash": "47f25f8ce55a0b70"
+      }
+    ],
+    "all_warnings": [
+      "Content may contain inappropriate material",
+      "Content may not be educational (score: 0.01). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.014925373134328358,
+      "educational_indicators": 3,
+      "total_words": 201,
+      "academic_score": 0.0,
+      "quality_score": 0.517,
+      "word_count": 201,
+      "sentence_count": 21,
+      "character_count": 1425,
+      "vocabulary_diversity": 0.547,
+      "average_word_length": 6.09,
+      "average_sentence_length": 9.57,
+      "complexity_ratio": 0.438,
+      "has_structure": false,
+      "has_numerical_data": true
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "bb3a28c2-d437-4b08-9e61-86f2890d59ba",
+    "processing_start": "2026-01-29T17:52:41.823232",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 1425,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 201,
+    "character_count": 1425,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}
