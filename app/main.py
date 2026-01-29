@@ -129,9 +129,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Mount media files (for generated videos)
 import os
 
-# Media is at the project root level (same level as backend directory)
+# Media is inside the backend directory
 backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-media_path = os.path.join(os.path.dirname(backend_dir), "media")
+media_path = os.path.join(backend_dir, "media")
 if os.path.exists(media_path):
     app.mount("/media", StaticFiles(directory=media_path), name="media")
     logger.info(f"Mounted media directory: {media_path}")
