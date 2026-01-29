@@ -569,6 +569,125 @@ Transform Content with AI{% endblock %} {% block content %}
     }
   }
 
+  // Video rendering and S3 upload
+  let currentVideoUrl = null;
+  let currentS3Url = null;
+
+  async function renderVideo() {
+    if (!currentGenerationId) {
+      showAlert(
+        "No content generated yet. Please generate educational content first.",
+        "warning",
+      );
+      return;
+    }
+
+    if (!currentManimCode) {
+      showAlert(
+        "No Manim code generated yet. Please generate Manim code first.",
+        "warning",
+      );
+      return;
+    }
+
+    const renderBtn = document.getElementById("renderVideoBtn");
+    const originalText = renderBtn.innerHTML;
+
+    try {
+      // Update button to show progress
+      renderBtn.disabled = true;
+      renderBtn.innerHTML = `
+        <span class="flex items-center space-x-2">
+          <span class="animate-spin">⏳</span>
+          <span>Rendering Video...</span>
+        </span>
+      `;
+
+      showAlert(
+        "Rendering video and uploading to S3... This may take a few minutes.",
+        "info",
+      );
+
+      const response = await fetch(
+        `/api/v1/content/render/video/${currentGenerationId}?quality=medium_quality&frame_rate=30`,
+        {
+          method: "POST",
+        },
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.detail || "Failed to render video");
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        currentVideoUrl = result.local_url;
+        currentS3Url = result.s3_url;
+
+        // Update button to show success
+        renderBtn.innerHTML = `
+          <span class="flex items-center space-x-2">
+            <span>✅</span>
+            <span>Video Ready!</span>
+          </span>
+        `;
+        renderBtn.classList.remove("bg-green-600", "hover:bg-green-700");
+        renderBtn.classList.add("bg-gray-600");
+
+        showAlert(
+          `Video rendered and uploaded! S3 URL: ${result.s3_url}`,
+          "success",
+        );
+
+        // Show video info
+        displayVideoInfo(result);
+      } else {
+        throw new Error(result.error || "Video rendering failed");
+      }
+    } catch (error) {
+      console.error("Video render error:", error);
+      renderBtn.innerHTML = originalText;
+      renderBtn.disabled = false;
+      showAlert(`Failed to render video: ${error.message}`, "error");
+    }
+  }
+
+  function displayVideoInfo(result) {
+    const validationContainer = document.getElementById("manimValidation");
+
+    validationContainer.innerHTML += `
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+        <div class="flex items-center space-x-2 mb-2">
+          <span>🎬</span>
+          <span class="font-medium text-blue-900">Video Rendered Successfully!</span>
+        </div>
+        <div class="text-sm text-blue-700 space-y-2">
+          <div>📁 <strong>Local URL:</strong> <a href="${result.local_url}" target="_blank" class="underline">${result.local_url}</a></div>
+          <div>☁️ <strong>S3 URL:</strong> <a href="${result.s3_url}" target="_blank" class="underline text-xs break-all">${result.s3_url}</a></div>
+          <div>📊 <strong>File Size:</strong> ${(result.file_size_bytes / 1024).toFixed(2)} KB</div>
+          <div>🎥 <strong>Quality:</strong> ${result.quality}</div>
+          <div>⏱️ <strong>Frame Rate:</strong> ${result.frame_rate} fps</div>
+        </div>
+        <div class="mt-3">
+          <button onclick="playRenderedVideo()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm">
+            ▶️ Play Video
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  function playRenderedVideo() {
+    if (currentVideoUrl) {
+      // Use the presentation player with the rendered video
+      openPresentationPlayer(currentVideoUrl);
+    } else {
+      showAlert("No video available to play.", "warning");
+    }
+  }
+
   function displayManimValidation(validation) {
     const container = document.getElementById("manimValidation");
 
@@ -1134,8 +1253,17 @@ Transform Content with AI{% endblock %} {% block content %}
       return;
     }
 
-    // Default video path - this would be updated based on actual video generation
-    const videoUrl = `/media/videos/educational_presentation/480p15/EducationalPresentation.mp4`;
+    // Check if video has been rendered
+    if (!currentVideoUrl) {
+      showAlert(
+        "Video not rendered yet. Click 'Render Video & Upload to S3' first to render the video.",
+        "warning",
+      );
+      return;
+    }
+
+    // Use the rendered video URL
+    const videoUrl = currentVideoUrl;
 
     // Use slide specs from manim generation if available, otherwise generate from script
     const slides = currentSlideSpecs || generateDefaultSlides();

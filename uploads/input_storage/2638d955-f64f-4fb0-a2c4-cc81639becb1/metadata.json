@@ -1,0 +1,101 @@
+{
+  "storage_id": "2638d955-f64f-4fb0-a2c4-cc81639becb1",
+  "content_type": "text",
+  "content_hash": "b5b266c1f1a4f850876b1bcb95dc99fc0e9bf88af90859e37f90863ca04f3cf3",
+  "stored_at": "2026-01-29T16:01:41.747447",
+  "generation_id": "87746590-6c81-4c65-82cf-e25fee94f0d2",
+  "original_metadata": {
+    "topic": "mathematics",
+    "difficulty_level": "intermediate",
+    "target_audience": "high school students",
+    "learning_goals": [
+      "vector addition",
+      "vector subtraction",
+      "vector dot product"
+    ],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 3202,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 3129
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "Vectors are mathematical objects that have **both magnitude (how big)** and **direction (which way)**. Unlike regular numbers (scalars) that only tell you \u201chow much,\u201d vectors tell you **how much and where**, which makes them super useful in math, physics, and computer graphics. The easiest way to think about vectors is visually\u2014**as arrows** on a graph. The length of the arrow shows the magnitude, and the direction of the arrow shows where it\u2019s pointing. ![Image](https://www.scaler.com/topics/images/plot-vector-using-axes-arrow-method.webp) ![Image](https://study.com/cimages/multimages/16/vector_magnitude_direction_angle4138325646577888796.gif) ![Image](https://www.grc.nasa.gov/www/k-12/rocket/Images/vectpart.gif) ### Key concepts include: 1. **Vector Representation (2D)** In two dimensions, a vector is often written as **(x, y)**. This means you move *x* units horizontally and *y* units vertically. On a graph, you draw an arrow starting at the origin (0,0) and ending at (x, y). Seeing this on a grid makes vectors way easier to understand than just numbers. 2. **Vector Addition (Tip-to-Tail Method)** To add vectors, you place the **tail of the second vector at the tip of the first**. The resulting vector goes from the start of the first to the end of the second. Visually, it\u2019s like walking one direction and then another\u2014the final arrow shows where you end up. This visual trick is *way* better than memorizing formulas. ![Image](https://www.sfu.ca/phys/100/lectures/lecture11/L11fig2.GIF) ![Image](https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/parallelogram-law-of-vector-addition-1634729492.png) ![Image](https://images.openai.com/static-rsc-3/cdrc0pU4NlWCOBleRtG2f_KbgCSpKr1LsKDkd8eUbXmYgODkp40CBLr5bpSeScQFovAiZxAzgnQDSgCiiku4qygWW1K2j9SEOlxuNpFJhqk?purpose=fullsize) 3. **Vector Subtraction (Reverse the Direction)** Subtracting a vector is the same as **adding its negative**. Visually, you just flip the direction of the vector you\u2019re subtracting, then add it normally using the tip-to-tail method. Drawing this out helps you instantly see why subtraction works the way it does. ![Image](https://images.openai.com/static-rsc-3/awp3vlAkKdnx5Ha9tXeoTO6WHE0KArn-4ZYpjXX5LSjV1xd5n5N08bsSCVvcEFuey4j47WcnG3POpHshQ3HTXnDfp6boSQDSm9R4_r5QAi8?purpose=fullsize) ![Image](https://www.onlinemathlearning.com/image-files/negative-vector1.jpg) ![Image](https://www.onlinemathlearning.com/image-files/vector-subtraction.png) 4. **Components and Visualization** Any vector can be broken into horizontal (x) and vertical (y) components. Drawing these components as right-angle lines on a graph helps you understand how the vector is built and makes addition and subtraction easier\u2014just add or subtract x-values and y-values separately. 5. **Why Visuals Matter** Vectors are all about movement and direction, so **drawing arrows, graphs, and grids** makes everything click faster. Once you *see* vector addition and subtraction, the math stops feeling abstract and starts feeling intuitive. In short: if vectors feel confusing, **grab a pencil and draw them**. The visuals do half the thinking for you.",
+        "warnings": [
+          "Content contains potentially suspicious URL: https://study.com/cimages/multimages/16/vector_magnitude_direction_angle4138325646577888796.gif)",
+          "Content contains potentially suspicious URL: https://images.openai.com/static-rsc-3/cdrc0pU4NlWCOBleRtG2f_KbgCSpKr1LsKDkd8eUbXmYgODkp40CBLr5bpSeScQFovAiZxAzgnQDSgCiiku4qygWW1K2j9SEOlxuNpFJhqk?purpose=fullsize)",
+          "Content contains potentially suspicious URL: https://images.openai.com/static-rsc-3/awp3vlAkKdnx5Ha9tXeoTO6WHE0KArn-4ZYpjXX5LSjV1xd5n5N08bsSCVvcEFuey4j47WcnG3POpHshQ3HTXnDfp6boSQDSm9R4_r5QAi8?purpose=fullsize)",
+          "Content may not be educational (score: 0.01). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.008379888268156424,
+          "educational_indicators": 3,
+          "total_words": 358,
+          "academic_score": 0.002793296089385475,
+          "quality_score": 0.459,
+          "word_count": 358,
+          "sentence_count": 59,
+          "character_count": 3129,
+          "vocabulary_diversity": 0.366,
+          "average_word_length": 7.74,
+          "average_sentence_length": 6.07,
+          "complexity_ratio": 0.307,
+          "has_structure": false,
+          "has_numerical_data": true
+        },
+        "content_hash": "1665c12719811593"
+      }
+    ],
+    "all_warnings": [
+      "Content contains potentially suspicious URL: https://study.com/cimages/multimages/16/vector_magnitude_direction_angle4138325646577888796.gif)",
+      "Content contains potentially suspicious URL: https://images.openai.com/static-rsc-3/cdrc0pU4NlWCOBleRtG2f_KbgCSpKr1LsKDkd8eUbXmYgODkp40CBLr5bpSeScQFovAiZxAzgnQDSgCiiku4qygWW1K2j9SEOlxuNpFJhqk?purpose=fullsize)",
+      "Content contains potentially suspicious URL: https://images.openai.com/static-rsc-3/awp3vlAkKdnx5Ha9tXeoTO6WHE0KArn-4ZYpjXX5LSjV1xd5n5N08bsSCVvcEFuey4j47WcnG3POpHshQ3HTXnDfp6boSQDSm9R4_r5QAi8?purpose=fullsize)",
+      "Content may not be educational (score: 0.01). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.008379888268156424,
+      "educational_indicators": 3,
+      "total_words": 358,
+      "academic_score": 0.002793296089385475,
+      "quality_score": 0.459,
+      "word_count": 358,
+      "sentence_count": 59,
+      "character_count": 3129,
+      "vocabulary_diversity": 0.366,
+      "average_word_length": 7.74,
+      "average_sentence_length": 6.07,
+      "complexity_ratio": 0.307,
+      "has_structure": false,
+      "has_numerical_data": true
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "87746590-6c81-4c65-82cf-e25fee94f0d2",
+    "processing_start": "2026-01-29T16:01:41.747407",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 3129,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 358,
+    "character_count": 3129,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

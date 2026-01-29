@@ -161,6 +161,16 @@
     <!-- Action Buttons -->
     <div class="flex flex-wrap gap-4">
       <button
+        id="renderVideoBtn"
+        onclick="renderVideo()"
+        class="bg-green-600 hover:bg-green-700 px-6 py-3 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+      >
+        <span class="flex items-center space-x-2">
+          <span>🎬</span>
+          <span>Render Video & Upload to S3</span>
+        </span>
+      </button>
+      <button
         onclick="playPresentation()"
         class="btn-primary px-6 py-3 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
       >
