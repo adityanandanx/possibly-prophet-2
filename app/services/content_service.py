@@ -19,6 +19,7 @@ from .content_validator import ContentValidator, ValidationResult
 from .input_storage import input_storage_service
 from .manim_generator import ManimCodeGenerator
 from .video_renderer import VideoRenderer
+from .aws_knowledge_base import get_knowledge_base_service
 
 # Import agents (will be available after agents setup is complete)
 try:
@@ -50,8 +51,95 @@ class ContentService:
         self.manim_generator = ManimCodeGenerator()
         self.video_renderer = VideoRenderer()
 
+        # Initialize AWS Knowledge Base service (lazy loaded)
+        self._knowledge_base = None
+
         # In-memory storage for generation status (replace with database later)
         self.generations = {}
+
+    @property
+    def knowledge_base(self):
+        """Lazy initialization of Knowledge Base service."""
+        if self._knowledge_base is None:
+            try:
+                self._knowledge_base = get_knowledge_base_service()
+                logger.info("Knowledge Base service initialized")
+            except Exception as e:
+                logger.warning(f"Knowledge Base service not available: {e}")
+        return self._knowledge_base
+
+    async def store_in_knowledge_base(
+        self,
+        generation_id: str,
+        content: str,
+        metadata: Dict[str, Any],
+        content_type: str = "educational_content",
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Store content in AWS Knowledge Base for future retrieval.
+
+        Args:
+            generation_id: Unique ID for the content
+            content: Text content to store
+            metadata: Additional metadata
+            content_type: Type of content
+
+        Returns:
+            Result of the storage operation, or None if KB not available
+        """
+        if self.knowledge_base is None:
+            logger.warning("Knowledge Base not available, skipping storage")
+            return None
+
+        try:
+            result = await self.knowledge_base.add_document(
+                document_id=generation_id,
+                content=content,
+                metadata=metadata,
+                content_type=content_type,
+            )
+
+            if result.get("success"):
+                logger.info(f"Stored content {generation_id} in Knowledge Base")
+            else:
+                logger.warning(f"Failed to store in KB: {result.get('error')}")
+
+            return result
+        except Exception as e:
+            logger.error(f"Error storing in Knowledge Base: {e}")
+            return None
+
+    async def retrieve_from_knowledge_base(
+        self,
+        query: str,
+        max_results: int = 5,
+    ) -> List[Dict[str, Any]]:
+        """
+        Retrieve relevant content from AWS Knowledge Base.
+
+        Args:
+            query: Search query
+            max_results: Maximum results to return
+
+        Returns:
+            List of relevant documents
+        """
+        if self.knowledge_base is None:
+            logger.warning("Knowledge Base not available")
+            return []
+
+        try:
+            result = await self.knowledge_base.retrieve(
+                query=query,
+                max_results=max_results,
+            )
+
+            if result.get("success"):
+                return result.get("results", [])
+            return []
+        except Exception as e:
+            logger.error(f"Error retrieving from Knowledge Base: {e}")
+            return []
 
     async def generate_from_inputs(
         self,

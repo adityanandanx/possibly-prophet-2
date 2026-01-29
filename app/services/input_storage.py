@@ -11,7 +11,7 @@ from pathlib import Path
 import logging
 
 from app.core.config import settings
-from app.services.vector_db import vector_db_service
+from app.services.aws_knowledge_base import get_knowledge_base_service
 from app.services.file_storage import file_storage_service
 from app.models.content import ContentInput, ContentType
 
@@ -28,7 +28,17 @@ class InputStorageService:
         # In-memory storage for quick access (replace with database later)
         self.stored_inputs = {}
         
+        # Lazy initialization for knowledge base service
+        self._knowledge_base = None
+        
         logger.info(f"Input storage service initialized with storage dir: {self.storage_dir}")
+    
+    @property
+    def knowledge_base(self):
+        """Lazy initialization of AWS Knowledge Base service"""
+        if self._knowledge_base is None:
+            self._knowledge_base = get_knowledge_base_service()
+        return self._knowledge_base
     
     async def store_input(
         self,
@@ -154,26 +164,28 @@ class InputStorageService:
             if generation_id:
                 where_filters["generation_id"] = generation_id
             
-            # Search in vector database
-            search_results = vector_db_service.search_content(
+            # Search in AWS Knowledge Base
+            kb_results = await self.knowledge_base.retrieve(
                 query=query,
-                n_results=limit,
-                where=where_filters if where_filters else None
+                max_results=limit,
+                filters=where_filters if where_filters else None
             )
             
             # Enrich results with full metadata
             enriched_results = []
-            for result in search_results:
-                storage_id = result["id"]
-                stored_input = await self.retrieve_input(storage_id)
-                if stored_input:
-                    enriched_results.append({
-                        "storage_id": storage_id,
-                        "content": stored_input["content"],
-                        "metadata": stored_input["metadata"],
-                        "similarity_score": 1 - result.get("distance", 0),  # Convert distance to similarity
-                        "search_snippet": result["content"][:200] + "..." if len(result["content"]) > 200 else result["content"]
-                    })
+            if kb_results.get("success") and kb_results.get("results"):
+                for result in kb_results["results"]:
+                    storage_id = result.get("document_id") or result.get("id")
+                    if storage_id:
+                        stored_input = await self.retrieve_input(storage_id)
+                        if stored_input:
+                            enriched_results.append({
+                                "storage_id": storage_id,
+                                "content": stored_input["content"],
+                                "metadata": stored_input["metadata"],
+                                "similarity_score": result.get("score", 0),
+                                "search_snippet": result.get("content", "")[:200] + "..." if len(result.get("content", "")) > 200 else result.get("content", "")
+                            })
             
             logger.info(f"Found {len(enriched_results)} inputs for query: {query}")
             return enriched_results
@@ -286,8 +298,11 @@ class InputStorageService:
             # Remove from filesystem
             await self._delete_from_filesystem(storage_id)
             
-            # Remove from vector database
-            vector_db_service.delete_content(storage_id)
+            # Remove from AWS Knowledge Base
+            try:
+                await self.knowledge_base.delete_document(storage_id)
+            except Exception as kb_error:
+                logger.warning(f"Failed to delete from Knowledge Base: {kb_error}")
             
             # Remove from memory cache
             if storage_id in self.stored_inputs:
@@ -319,8 +334,8 @@ class InputStorageService:
                 type_counts[content_type] = type_counts.get(content_type, 0) + 1
                 total_size += stored_data["metadata"].get("content_length", 0)
             
-            # Get vector database stats
-            vector_stats = vector_db_service.get_collection_stats()
+            # Get AWS Knowledge Base info
+            kb_info = await self.knowledge_base.get_knowledge_base_info()
             
             # Get file storage stats
             file_stats = file_storage_service.get_storage_stats()
@@ -330,7 +345,7 @@ class InputStorageService:
                 "content_type_distribution": type_counts,
                 "total_content_size_bytes": total_size,
                 "total_content_size_mb": round(total_size / (1024 * 1024), 2),
-                "vector_db_stats": vector_stats,
+                "knowledge_base_info": kb_info,
                 "file_storage_stats": file_stats,
                 "storage_directory": str(self.storage_dir)
             }
@@ -442,10 +457,10 @@ class InputStorageService:
             return None
     
     async def _store_to_vector_db(self, storage_id: str, content: str, metadata: Dict[str, Any]) -> None:
-        """Store content in vector database for semantic search"""
+        """Store content in AWS Knowledge Base for semantic search"""
         try:
-            # Prepare metadata for vector storage (only JSON-serializable values)
-            vector_metadata = {
+            # Prepare metadata for knowledge base storage (only JSON-serializable values)
+            kb_metadata = {
                 "storage_id": storage_id,
                 "content_type": metadata.get("content_type"),
                 "content_hash": metadata.get("content_hash"),
@@ -457,32 +472,33 @@ class InputStorageService:
             
             # Add type-specific metadata
             if metadata.get("file_metadata"):
-                vector_metadata["filename"] = metadata["file_metadata"].get("filename")
-                vector_metadata["file_size"] = metadata["file_metadata"].get("file_size")
-                vector_metadata["mime_type"] = metadata["file_metadata"].get("mime_type")
+                kb_metadata["filename"] = metadata["file_metadata"].get("filename")
+                kb_metadata["file_size"] = metadata["file_metadata"].get("file_size")
+                kb_metadata["mime_type"] = metadata["file_metadata"].get("mime_type")
             
             if metadata.get("url_metadata"):
-                vector_metadata["source_url"] = metadata["url_metadata"].get("source_url")
-                vector_metadata["domain"] = metadata["url_metadata"].get("domain")
-                vector_metadata["page_title"] = metadata["url_metadata"].get("page_title")
+                kb_metadata["source_url"] = metadata["url_metadata"].get("source_url")
+                kb_metadata["domain"] = metadata["url_metadata"].get("domain")
+                kb_metadata["page_title"] = metadata["url_metadata"].get("page_title")
             
             if metadata.get("text_metadata"):
-                vector_metadata["word_count"] = metadata["text_metadata"].get("word_count")
-                vector_metadata["estimated_reading_time"] = metadata["text_metadata"].get("estimated_reading_time_minutes")
+                kb_metadata["word_count"] = metadata["text_metadata"].get("word_count")
+                kb_metadata["estimated_reading_time"] = metadata["text_metadata"].get("estimated_reading_time_minutes")
             
-            # Store in vector database
-            success = vector_db_service.add_content(
-                content_id=storage_id,
+            # Store in AWS Knowledge Base
+            result = await self.knowledge_base.add_document(
+                document_id=storage_id,
                 content=content,
-                metadata=vector_metadata
+                metadata=kb_metadata,
+                content_type="educational_content"
             )
             
-            if not success:
-                logger.warning(f"Failed to store input {storage_id} in vector database")
+            if not result.get("success"):
+                logger.warning(f"Failed to store input {storage_id} in Knowledge Base: {result.get('error')}")
             
         except Exception as e:
-            logger.error(f"Failed to store to vector database: {str(e)}")
-            # Don't raise - vector storage is not critical for basic functionality
+            logger.error(f"Failed to store to Knowledge Base: {str(e)}")
+            # Don't raise - knowledge base storage is not critical for basic functionality
     
     async def _delete_from_filesystem(self, storage_id: str) -> None:
         """Delete content and metadata from filesystem"""

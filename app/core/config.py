@@ -30,6 +30,11 @@ class Settings(BaseSettings):
     S3_BUCKET: str = "educational-presentations"
     S3_PREFIX: str = "presentations/"
 
+    # AWS Bedrock Knowledge Base settings
+    BEDROCK_KNOWLEDGE_BASE_ID: Optional[str] = None
+    BEDROCK_DATA_SOURCE_ID: Optional[str] = None
+    S3_KNOWLEDGE_BUCKET: str = "educational-knowledge-base"
+
     # CORS settings
     ALLOWED_ORIGINS: List[str] = [
         "http://localhost:3000",
@@ -59,9 +64,6 @@ class Settings(BaseSettings):
 
     # Database settings (for future use)
     DATABASE_URL: str = "sqlite:///./educational_content.db"
-
-    # Vector database settings
-    CHROMA_PERSIST_DIR: str = "chroma_db"
 
     # Logging settings
     LOG_LEVEL: str = "INFO"

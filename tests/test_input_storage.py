@@ -8,10 +8,20 @@ import tempfile
 import shutil
 from pathlib import Path
 from datetime import datetime
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, AsyncMock
 
 from app.services.input_storage import InputStorageService, input_storage_service
 from app.models.content import ContentInput, ContentType
+
+
+def create_mock_kb_service():
+    """Create a properly configured mock for the AWS Knowledge Base service"""
+    mock_kb = MagicMock()
+    mock_kb.add_document = AsyncMock(return_value={"success": True})
+    mock_kb.delete_document = AsyncMock(return_value={"success": True})
+    mock_kb.retrieve = AsyncMock(return_value={"success": True, "results": []})
+    mock_kb.get_knowledge_base_info = AsyncMock(return_value={"knowledge_base_id": "test-kb"})
+    return mock_kb
 
 
 class TestInputStorageService:
@@ -84,16 +94,16 @@ class TestInputStorageService:
         
         generation_id = "test-gen-123"
         
-        # Mock vector database operations
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            
-            storage_id = await storage_service.store_input(
-                content_input=sample_text_input,
-                validation_result=validation_result,
-                processing_metadata=processing_metadata,
-                generation_id=generation_id
-            )
+        # Mock knowledge base operations
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+        
+        storage_id = await storage_service.store_input(
+            content_input=sample_text_input,
+            validation_result=validation_result,
+            processing_metadata=processing_metadata,
+            generation_id=generation_id
+        )
         
         # Verify storage ID is returned
         assert storage_id is not None
@@ -117,21 +127,21 @@ class TestInputStorageService:
             stored_content = f.read()
         assert stored_content == sample_text_input.content
         
-        # Verify vector database was called
-        mock_vector_db.add_content.assert_called_once()
+        # Verify knowledge base was called
+        mock_kb.add_document.assert_called_once()
     
     @pytest.mark.asyncio
     async def test_store_file_input(self, storage_service, sample_file_input):
         """Test storing file input with file-specific metadata"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            
-            storage_id = await storage_service.store_input(
-                content_input=sample_file_input,
-                validation_result=validation_result
-            )
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+        
+        storage_id = await storage_service.store_input(
+            content_input=sample_file_input,
+            validation_result=validation_result
+        )
         
         # Verify file-specific metadata
         stored_data = storage_service.stored_inputs[storage_id]
@@ -146,10 +156,10 @@ class TestInputStorageService:
         """Test storing URL input with URL-specific metadata"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            
-            storage_id = await storage_service.store_input(
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+        
+        storage_id = await storage_service.store_input(
                 content_input=sample_url_input,
                 validation_result=validation_result
             )
@@ -166,8 +176,8 @@ class TestInputStorageService:
         """Test retrieving stored input by ID"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -195,11 +205,11 @@ class TestInputStorageService:
         """Test searching stored inputs"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
             
             # Mock search results
-            mock_vector_db.search_content.return_value = [
+            mock_kb_service.search_content.return_value = [
                 {
                     "id": "storage-1",
                     "content": sample_text_input.content,
@@ -219,7 +229,7 @@ class TestInputStorageService:
             )
             
             # Update mock to return actual storage ID
-            mock_vector_db.search_content.return_value[0]["id"] = storage_id1
+            mock_kb_service.search_content.return_value[0]["id"] = storage_id1
             
             # Search inputs
             results = await storage_service.search_inputs(
@@ -236,15 +246,15 @@ class TestInputStorageService:
         assert "search_snippet" in results[0]
         
         # Verify vector database search was called
-        mock_vector_db.search_content.assert_called_once()
+        mock_kb_service.search_content.assert_called_once()
     
     @pytest.mark.asyncio
     async def test_list_inputs(self, storage_service, sample_text_input, sample_file_input):
         """Test listing stored inputs with filters"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
             
             # Store inputs
             text_storage_id = await storage_service.store_input(
@@ -283,8 +293,8 @@ class TestInputStorageService:
         """Test getting input processing history"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
             
             # Store same content multiple times (simulating reprocessing)
             storage_id1 = await storage_service.store_input(
@@ -318,9 +328,9 @@ class TestInputStorageService:
         """Test deleting stored input"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            mock_vector_db.delete_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            mock_kb_service.delete_content.return_value = True
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -342,16 +352,16 @@ class TestInputStorageService:
         assert not input_dir.exists()
         
         # Verify vector database delete was called
-        mock_vector_db.delete_content.assert_called_once_with(storage_id)
+        mock_kb_service.delete_content.assert_called_once_with(storage_id)
     
     @pytest.mark.asyncio
     async def test_get_storage_stats(self, storage_service, sample_text_input, sample_file_input):
         """Test getting storage statistics"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            mock_vector_db.get_collection_stats.return_value = {
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            mock_kb_service.get_collection_stats.return_value = {
                 "content_count": 2,
                 "scripts_count": 0,
                 "total_items": 2
@@ -441,8 +451,8 @@ class TestInputStorageService:
         """Test that data persists to filesystem correctly"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -466,8 +476,8 @@ class TestInputStorageService:
         """Test integration with vector database"""
         validation_result = {"is_valid": True, "warnings": [], "errors": []}
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -476,8 +486,8 @@ class TestInputStorageService:
             )
         
         # Verify vector database was called with correct parameters
-        mock_vector_db.add_content.assert_called_once()
-        call_args = mock_vector_db.add_content.call_args
+        mock_kb_service.add_content.assert_called_once()
+        call_args = mock_kb_service.add_content.call_args
         
         assert call_args[1]["content_id"] == storage_id
         assert call_args[1]["content"] == sample_text_input.content

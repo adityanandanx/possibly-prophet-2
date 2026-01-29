@@ -17,7 +17,6 @@ dependencies = [
     "pypdf>=6.0.0", # For PDF processing (modern replacement for PyPDF2)
     "pdfplumber>=0.11.0", # For advanced PDF text extraction with table support
     "python-docx>=1.1.0", # For DOCX processing
-    "chromadb>=1.4.1",
     "pypdf>=6.6.2",
     "pdfplumber>=0.11.9",
     "manim>=0.19.2",

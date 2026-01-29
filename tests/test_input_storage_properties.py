@@ -10,7 +10,18 @@ import asyncio
 import tempfile
 import shutil
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, AsyncMock
+
+def create_mock_kb_service():
+    """Create a properly configured mock for the AWS Knowledge Base service"""
+    mock_kb = MagicMock()
+    mock_kb.add_document = AsyncMock(return_value={"success": True})
+    mock_kb.delete_document = AsyncMock(return_value={"success": True})
+    mock_kb.retrieve = AsyncMock(return_value={"success": True, "results": []})
+    mock_kb.get_knowledge_base_info = AsyncMock(return_value={"knowledge_base_id": "test-kb"})
+    return mock_kb
+
+
 from datetime import datetime
 
 from app.services.input_storage import InputStorageService
@@ -103,8 +114,9 @@ class TestInputStorageProperties:
         Property: All stored inputs must be retrievable with identical content
         **Validates: Requirements 1.7 - Storage and Retrieval**
         """
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -135,8 +147,9 @@ class TestInputStorageProperties:
         Property: Identical content must produce identical content hashes
         **Validates: Requirements 1.7 - Content versioning tracks modifications**
         """
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             # Store same content twice
             storage_id1 = await storage_service.store_input(
@@ -178,8 +191,9 @@ class TestInputStorageProperties:
         """
         stored_ids = []
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             # Store all inputs
             for content_input in content_inputs_list:
@@ -199,7 +213,7 @@ class TestInputStorageProperties:
                     "distance": 0.1
                 })
             
-            mock_vector_db.search_content.return_value = mock_search_results
+            storage_service._knowledge_base.retrieve = AsyncMock(return_value={"success": True, "results": mock_search_results})
             
             # Perform search
             search_results = await storage_service.search_inputs(
@@ -235,8 +249,9 @@ class TestInputStorageProperties:
         Property: Filtering must only return inputs matching the specified criteria
         **Validates: Requirements 1.7 - Search functionality with filters**
         """
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -279,9 +294,10 @@ class TestInputStorageProperties:
         Property: Deleted inputs must be completely removed from all storage systems
         **Validates: Requirements 1.7 - Content management and cleanup**
         """
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            mock_vector_db.delete_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
+            
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -309,7 +325,7 @@ class TestInputStorageProperties:
             assert not input_dir.exists(), "Input directory must be removed from filesystem"
             
             # Verify vector database cleanup was called
-            mock_vector_db.delete_content.assert_called_with(storage_id)
+            storage_service._knowledge_base.delete_document.assert_called_once()
     
     @given(
         content_inputs_list=st.lists(content_inputs(), min_size=2, max_size=5)
@@ -321,9 +337,10 @@ class TestInputStorageProperties:
         Property: Storage statistics must accurately reflect stored data
         **Validates: Requirements 1.7 - Storage monitoring and management**
         """
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
-            mock_vector_db.get_collection_stats.return_value = {
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
+            mock_kb_service.get_collection_stats.return_value = {
                 "content_count": len(content_inputs_list),
                 "scripts_count": 0,
                 "total_items": len(content_inputs_list)
@@ -395,8 +412,9 @@ class TestInputStorageProperties:
         
         generation_id = "test-gen-123"
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             # Store input
             storage_id = await storage_service.store_input(
@@ -471,8 +489,9 @@ class InputStorageStateMachine(RuleBasedStateMachine):
     )
     def store_input(self, content_input, generation_id):
         """Store an input and track it"""
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.add_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             # Run the async operation
             loop = asyncio.new_event_loop()
@@ -523,8 +542,9 @@ class InputStorageStateMachine(RuleBasedStateMachine):
         assume(storage_id in self.stored_inputs)
         assume(storage_id not in self.deleted_inputs)
         
-        with patch('app.services.input_storage.vector_db_service') as mock_vector_db:
-            mock_vector_db.delete_content.return_value = True
+        mock_kb = create_mock_kb_service()
+        storage_service._knowledge_base = mock_kb
+            
             
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
