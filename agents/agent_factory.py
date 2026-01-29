@@ -6,6 +6,7 @@ from typing import Dict, Any
 from .base_agent import BaseEducationalAgent
 from .content_structuring_agent import EnhancedContentStructuringAgent
 from .learning_objectives_agent import EnhancedLearningObjectivesAgent
+from .manim_generation_agent import ManimGenerationAgent
 from config.agents_config import PEDAGOGY_AGENTS
 import logging
 
@@ -36,6 +37,8 @@ class AgentFactory:
             return EnhancedContentStructuringAgent(**kwargs)
         elif agent_type == "learning_objectives":
             return EnhancedLearningObjectivesAgent(**kwargs)
+        elif agent_type == "manim_generation":
+            return ManimGenerationAgent(**kwargs)
         else:
             # Use base agent for other types
             return BaseEducationalAgent(agent_type, **kwargs)

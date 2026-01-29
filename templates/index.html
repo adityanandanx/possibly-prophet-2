@@ -1,37 +1,41 @@
-{% extends "base.html" %}
-
-{% block title %}Educational Content Generator - Transform Content with AI{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Educational Content Generator -
+Transform Content with AI{% endblock %} {% block content %}
 <!-- Hero Section -->
 <div class="text-center mb-12">
-    <div class="gradient-bg rounded-2xl p-8 text-white card-shadow">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">
-            Transform Content with AI
-        </h1>
-        <p class="text-xl md:text-2xl mb-6 opacity-90">
-            Create structured, pedagogically sound learning experiences from any educational material
-        </p>
-        <div class="flex flex-wrap justify-center gap-4 text-sm">
-            <div class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-4 py-2">
-                <span>🤖</span>
-                <span>AI-Powered Pedagogy</span>
-            </div>
-            <div class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-4 py-2">
-                <span>🎬</span>
-                <span>Manim Integration</span>
-            </div>
-            <div class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-4 py-2">
-                <span>📚</span>
-                <span>Multi-Format Support</span>
-            </div>
-        </div>
+  <div class="gradient-bg rounded-2xl p-8 text-white card-shadow">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+      Transform Content with AI
+    </h1>
+    <p class="text-xl md:text-2xl mb-6 opacity-90">
+      Create structured, pedagogically sound learning experiences from any
+      educational material
+    </p>
+    <div class="flex flex-wrap justify-center gap-4 text-sm">
+      <div
+        class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-4 py-2"
+      >
+        <span>🤖</span>
+        <span>AI-Powered Pedagogy</span>
+      </div>
+      <div
+        class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-4 py-2"
+      >
+        <span>🎬</span>
+        <span>Manim Integration</span>
+      </div>
+      <div
+        class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full px-4 py-2"
+      >
+        <span>📚</span>
+        <span>Multi-Format Support</span>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Alert Messages -->
 <div id="alertContainer" class="mb-6">
-    <!-- Alerts will be inserted here -->
+  <!-- Alerts will be inserted here -->
 </div>
 
 <!-- Input Section -->
@@ -45,139 +49,145 @@
 
 <!-- Features Section -->
 <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="bg-white rounded-lg card-shadow p-6 text-center">
-        <div class="text-4xl mb-4">🎯</div>
-        <h3 class="text-xl font-semibold mb-2">Learning Objectives</h3>
-        <p class="text-gray-600">AI-generated objectives aligned with Bloom's Taxonomy for measurable learning outcomes</p>
-    </div>
-    
-    <div class="bg-white rounded-lg card-shadow p-6 text-center">
-        <div class="text-4xl mb-4">📖</div>
-        <h3 class="text-xl font-semibold mb-2">Structured Content</h3>
-        <p class="text-gray-600">Organized sections with clear hierarchies and pedagogically sound progression</p>
-    </div>
-    
-    <div class="bg-white rounded-lg card-shadow p-6 text-center">
-        <div class="text-4xl mb-4">🎬</div>
-        <h3 class="text-xl font-semibold mb-2">Manim Animations</h3>
-        <p class="text-gray-600">Professional animation code for creating engaging visual presentations</p>
-    </div>
+  <div class="bg-white rounded-lg card-shadow p-6 text-center">
+    <div class="text-4xl mb-4">🎯</div>
+    <h3 class="text-xl font-semibold mb-2">Learning Objectives</h3>
+    <p class="text-gray-600">
+      AI-generated objectives aligned with Bloom's Taxonomy for measurable
+      learning outcomes
+    </p>
+  </div>
+
+  <div class="bg-white rounded-lg card-shadow p-6 text-center">
+    <div class="text-4xl mb-4">📖</div>
+    <h3 class="text-xl font-semibold mb-2">Structured Content</h3>
+    <p class="text-gray-600">
+      Organized sections with clear hierarchies and pedagogically sound
+      progression
+    </p>
+  </div>
+
+  <div class="bg-white rounded-lg card-shadow p-6 text-center">
+    <div class="text-4xl mb-4">🎬</div>
+    <h3 class="text-xl font-semibold mb-2">Manim Animations</h3>
+    <p class="text-gray-600">
+      Professional animation code for creating engaging visual presentations
+    </p>
+  </div>
 </div>
 
-{% endblock %}
-
-{% block extra_scripts %}
+{% endblock %} {% block extra_scripts %}
 <script>
-    // Global variables
-    let currentGenerationId = null;
-    let currentManimCode = null;
-    let currentEducationalScript = null;
-    
-    // Tab switching functionality
-    function switchTab(tabName, buttonElement) {
-        // Update tab buttons
-        document.querySelectorAll('.tab-button').forEach(btn => {
-            btn.classList.remove('tab-active');
-            btn.classList.add('text-gray-600', 'hover:text-gray-900');
-        });
-        buttonElement.classList.add('tab-active');
-        buttonElement.classList.remove('text-gray-600', 'hover:text-gray-900');
-        
-        // Update tab content
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.add('hidden');
-        });
-        document.getElementById(tabName + '-tab').classList.remove('hidden');
-        
-        // Clear any alerts
-        clearAlerts();
+  // Global variables
+  let currentGenerationId = null;
+  let currentManimCode = null;
+  let currentEducationalScript = null;
+
+  // Tab switching functionality
+  function switchTab(tabName, buttonElement) {
+    // Update tab buttons
+    document.querySelectorAll(".tab-button").forEach((btn) => {
+      btn.classList.remove("tab-active");
+      btn.classList.add("text-gray-600", "hover:text-gray-900");
+    });
+    buttonElement.classList.add("tab-active");
+    buttonElement.classList.remove("text-gray-600", "hover:text-gray-900");
+
+    // Update tab content
+    document.querySelectorAll(".tab-content").forEach((content) => {
+      content.classList.add("hidden");
+    });
+    document.getElementById(tabName + "-tab").classList.remove("hidden");
+
+    // Clear any alerts
+    clearAlerts();
+  }
+
+  function switchResultsTab(tabName, buttonElement) {
+    // Update tab buttons
+    document.querySelectorAll(".results-tab").forEach((btn) => {
+      btn.classList.remove("tab-active");
+      btn.classList.add("text-gray-600", "hover:text-gray-900");
+    });
+    buttonElement.classList.add("tab-active");
+    buttonElement.classList.remove("text-gray-600", "hover:text-gray-900");
+
+    // Update tab content
+    document.querySelectorAll(".results-content").forEach((content) => {
+      content.classList.add("hidden");
+    });
+    document.getElementById(tabName + "-results").classList.remove("hidden");
+  }
+
+  // File upload handling
+  const fileUpload = document.getElementById("fileUpload");
+  const fileInput = document.getElementById("fileInput");
+  const fileInfo = document.getElementById("fileInfo");
+
+  fileUpload.addEventListener("click", () => fileInput.click());
+
+  fileUpload.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    fileUpload.classList.add("dragover");
+  });
+
+  fileUpload.addEventListener("dragleave", () => {
+    fileUpload.classList.remove("dragover");
+  });
+
+  fileUpload.addEventListener("drop", (e) => {
+    e.preventDefault();
+    fileUpload.classList.remove("dragover");
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      fileInput.files = files;
+      updateFileInfo(files[0]);
     }
-    
-    function switchResultsTab(tabName, buttonElement) {
-        // Update tab buttons
-        document.querySelectorAll('.results-tab').forEach(btn => {
-            btn.classList.remove('tab-active');
-            btn.classList.add('text-gray-600', 'hover:text-gray-900');
-        });
-        buttonElement.classList.add('tab-active');
-        buttonElement.classList.remove('text-gray-600', 'hover:text-gray-900');
-        
-        // Update tab content
-        document.querySelectorAll('.results-content').forEach(content => {
-            content.classList.add('hidden');
-        });
-        document.getElementById(tabName + '-results').classList.remove('hidden');
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    if (e.target.files.length > 0) {
+      updateFileInfo(e.target.files[0]);
     }
-    
-    // File upload handling
-    const fileUpload = document.getElementById('fileUpload');
-    const fileInput = document.getElementById('fileInput');
-    const fileInfo = document.getElementById('fileInfo');
-    
-    fileUpload.addEventListener('click', () => fileInput.click());
-    
-    fileUpload.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        fileUpload.classList.add('dragover');
-    });
-    
-    fileUpload.addEventListener('dragleave', () => {
-        fileUpload.classList.remove('dragover');
-    });
-    
-    fileUpload.addEventListener('drop', (e) => {
-        e.preventDefault();
-        fileUpload.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-            fileInput.files = files;
-            updateFileInfo(files[0]);
-        }
-    });
-    
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-            updateFileInfo(e.target.files[0]);
-        }
-    });
-    
-    function updateFileInfo(file) {
-        const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-        fileInfo.innerHTML = `
+  });
+
+  function updateFileInfo(file) {
+    const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+    fileInfo.innerHTML = `
             <div class="flex items-center space-x-3">
                 <div class="text-2xl">📄</div>
                 <div>
                     <div class="font-medium text-gray-900">${file.name}</div>
-                    <div class="text-sm text-gray-500">Size: ${sizeInMB} MB • Type: ${file.type || 'Unknown'}</div>
+                    <div class="text-sm text-gray-500">Size: ${sizeInMB} MB • Type: ${file.type || "Unknown"}</div>
                 </div>
             </div>
         `;
-        fileInfo.classList.remove('hidden');
-    }
-    
-    // Alert system
-    function showAlert(message, type = 'info') {
-        const alertContainer = document.getElementById('alertContainer');
-        const alertId = 'alert-' + Date.now();
-        
-        const alertColors = {
-            success: 'bg-green-50 border-green-200 text-green-800',
-            error: 'bg-red-50 border-red-200 text-red-800',
-            warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-            info: 'bg-blue-50 border-blue-200 text-blue-800'
-        };
-        
-        const alertIcons = {
-            success: '✅',
-            error: '❌',
-            warning: '⚠️',
-            info: 'ℹ️'
-        };
-        
-        const alert = document.createElement('div');
-        alert.id = alertId;
-        alert.className = `${alertColors[type]} border rounded-lg p-4 mb-4 transition-all duration-300`;
-        alert.innerHTML = `
+    fileInfo.classList.remove("hidden");
+  }
+
+  // Alert system
+  function showAlert(message, type = "info") {
+    const alertContainer = document.getElementById("alertContainer");
+    const alertId = "alert-" + Date.now();
+
+    const alertColors = {
+      success: "bg-green-50 border-green-200 text-green-800",
+      error: "bg-red-50 border-red-200 text-red-800",
+      warning: "bg-yellow-50 border-yellow-200 text-yellow-800",
+      info: "bg-blue-50 border-blue-200 text-blue-800",
+    };
+
+    const alertIcons = {
+      success: "✅",
+      error: "❌",
+      warning: "⚠️",
+      info: "ℹ️",
+    };
+
+    const alert = document.createElement("div");
+    alert.id = alertId;
+    alert.className = `${alertColors[type]} border rounded-lg p-4 mb-4 transition-all duration-300`;
+    alert.innerHTML = `
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>${alertIcons[type]}</span>
@@ -188,187 +198,225 @@
                 </button>
             </div>
         `;
-        
-        alertContainer.appendChild(alert);
-        
-        // Auto-remove after 10 seconds for non-error alerts
-        if (type !== 'error') {
-            setTimeout(() => removeAlert(alertId), 10000);
-        }
+
+    alertContainer.appendChild(alert);
+
+    // Auto-remove after 10 seconds for non-error alerts
+    if (type !== "error") {
+      setTimeout(() => removeAlert(alertId), 10000);
     }
-    
-    function removeAlert(alertId) {
-        const alert = document.getElementById(alertId);
-        if (alert) {
-            alert.classList.add('opacity-0', 'transform', 'scale-95');
-            setTimeout(() => alert.remove(), 300);
-        }
+  }
+
+  function removeAlert(alertId) {
+    const alert = document.getElementById(alertId);
+    if (alert) {
+      alert.classList.add("opacity-0", "transform", "scale-95");
+      setTimeout(() => alert.remove(), 300);
     }
-    
-    function clearAlerts() {
-        document.getElementById('alertContainer').innerHTML = '';
-    }
-    
-    // Form submission
-    document.getElementById('contentForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        clearAlerts();
-        showLoading(true);
-        
-        try {
-            const activeTab = document.querySelector('.tab-button.tab-active').dataset.tab;
-            let result;
-            
-            if (activeTab === 'text') {
-                result = await submitTextContent();
-            } else if (activeTab === 'file') {
-                result = await submitFileContent();
-            } else if (activeTab === 'url') {
-                result = await submitUrlContent();
-            }
-            
-            if (result && result.generation_id) {
-                currentGenerationId = result.generation_id;
-                currentEducationalScript = result.educational_script;
-                displayResults(result);
-                showAlert('Educational content generated successfully!', 'success');
-            } else {
-                throw new Error('Invalid response from server');
-            }
-            
-        } catch (error) {
-            console.error('Generation error:', error);
-            showAlert(error.message || 'Failed to generate content. Please try again.', 'error');
-        } finally {
-            showLoading(false);
+  }
+
+  function clearAlerts() {
+    document.getElementById("alertContainer").innerHTML = "";
+  }
+
+  // Form submission
+  document
+    .getElementById("contentForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      clearAlerts();
+      showLoading(true);
+
+      try {
+        const activeTab = document.querySelector(".tab-button.tab-active")
+          .dataset.tab;
+        let result;
+
+        if (activeTab === "text") {
+          result = await submitTextContent();
+        } else if (activeTab === "file") {
+          result = await submitFileContent();
+        } else if (activeTab === "url") {
+          result = await submitUrlContent();
         }
+
+        if (result && result.generation_id) {
+          currentGenerationId = result.generation_id;
+          currentEducationalScript = result.educational_script;
+          displayResults(result);
+          showAlert("Educational content generated successfully!", "success");
+        } else {
+          throw new Error("Invalid response from server");
+        }
+      } catch (error) {
+        console.error("Generation error:", error);
+        showAlert(
+          error.message || "Failed to generate content. Please try again.",
+          "error",
+        );
+      } finally {
+        showLoading(false);
+      }
     });
-    
-    // API submission functions
-    async function submitTextContent() {
-        const formData = new FormData();
-        formData.append('content', document.getElementById('textContent').value);
-        formData.append('topic', document.getElementById('topic').value);
-        formData.append('difficulty_level', document.getElementById('difficulty').value);
-        formData.append('target_audience', document.getElementById('audience').value);
-        formData.append('learning_goals', document.getElementById('goals').value);
-        
-        const response = await fetch('/api/v1/content/text', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.detail || 'Failed to process text content');
-        }
-        
-        return await response.json();
+
+  // API submission functions
+  async function submitTextContent() {
+    const formData = new FormData();
+    formData.append("content", document.getElementById("textContent").value);
+    formData.append("topic", document.getElementById("topic").value);
+    formData.append(
+      "difficulty_level",
+      document.getElementById("difficulty").value,
+    );
+    formData.append(
+      "target_audience",
+      document.getElementById("audience").value,
+    );
+    formData.append("learning_goals", document.getElementById("goals").value);
+
+    const response = await fetch("/api/v1/content/text", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.detail || "Failed to process text content");
     }
-    
-    async function submitFileContent() {
-        const formData = new FormData();
-        const fileInput = document.getElementById('fileInput');
-        
-        if (!fileInput.files[0]) {
-            throw new Error('Please select a file to upload');
-        }
-        
-        formData.append('file', fileInput.files[0]);
-        formData.append('topic', document.getElementById('topic').value);
-        formData.append('difficulty_level', document.getElementById('difficulty').value);
-        formData.append('target_audience', document.getElementById('audience').value);
-        formData.append('learning_goals', document.getElementById('goals').value);
-        
-        const response = await fetch('/api/v1/content/upload', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.detail || 'Failed to process uploaded file');
-        }
-        
-        return await response.json();
+
+    return await response.json();
+  }
+
+  async function submitFileContent() {
+    const formData = new FormData();
+    const fileInput = document.getElementById("fileInput");
+
+    if (!fileInput.files[0]) {
+      throw new Error("Please select a file to upload");
     }
-    
-    async function submitUrlContent() {
-        const formData = new FormData();
-        formData.append('url', document.getElementById('urlInput').value);
-        formData.append('topic', document.getElementById('topic').value);
-        formData.append('difficulty_level', document.getElementById('difficulty').value);
-        formData.append('target_audience', document.getElementById('audience').value);
-        formData.append('learning_goals', document.getElementById('goals').value);
-        
-        const response = await fetch('/api/v1/content/url', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.detail || 'Failed to process URL content');
-        }
-        
-        return await response.json();
+
+    formData.append("file", fileInput.files[0]);
+    formData.append("topic", document.getElementById("topic").value);
+    formData.append(
+      "difficulty_level",
+      document.getElementById("difficulty").value,
+    );
+    formData.append(
+      "target_audience",
+      document.getElementById("audience").value,
+    );
+    formData.append("learning_goals", document.getElementById("goals").value);
+
+    const response = await fetch("/api/v1/content/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.detail || "Failed to process uploaded file");
     }
-    
-    // Results display
-    function displayResults(result) {
-        const script = result?.educational_script;
-        
-        if (!script) {
-            showAlert('No educational script was generated. Please try again.', 'warning');
-            return;
-        }
-        
-        // Update title and badges
-        document.getElementById('scriptTitleText').textContent = script.title || 'Educational Content';
-        document.getElementById('difficultyBadge').textContent = result.difficulty_level || 'Intermediate';
-        document.getElementById('audienceBadge').textContent = result.target_audience || 'General Audience';
-        
-        // Display learning objectives
-        displayObjectives(script.learning_objectives || []);
-        
-        // Display content sections
-        displaySections(script.sections || []);
-        
-        // Display assessments
-        displayAssessments(script.assessments || []);
-        
-        // Show results section
-        document.getElementById('resultsSection').classList.remove('hidden');
-        
-        // Scroll to results
-        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+    return await response.json();
+  }
+
+  async function submitUrlContent() {
+    const formData = new FormData();
+    formData.append("url", document.getElementById("urlInput").value);
+    formData.append("topic", document.getElementById("topic").value);
+    formData.append(
+      "difficulty_level",
+      document.getElementById("difficulty").value,
+    );
+    formData.append(
+      "target_audience",
+      document.getElementById("audience").value,
+    );
+    formData.append("learning_goals", document.getElementById("goals").value);
+
+    const response = await fetch("/api/v1/content/url", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.detail || "Failed to process URL content");
     }
-    
-    function displayObjectives(objectives) {
-        const container = document.getElementById('objectivesList');
-        container.innerHTML = '';
-        
-        if (!objectives || objectives.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 italic">No learning objectives generated.</p>';
-            return;
-        }
-        
-        objectives.forEach((obj, index) => {
-            // Handle both string and object formats, with null safety
-            const objectiveText = typeof obj === 'string' ? obj : (obj?.objective || 'Learning objective');
-            // API returns bloom_level, but fallback to level for backwards compatibility
-            const level = typeof obj === 'object' ? (obj?.bloom_level || obj?.level || 'understand') : 'understand';
-            const measurable = typeof obj === 'object' ? (obj?.measurable ?? true) : true;
-            
-            // Safely capitalize the level
-            const levelDisplay = level && typeof level === 'string' 
-                ? level.charAt(0).toUpperCase() + level.slice(1) 
-                : 'Understand';
-            
-            const div = document.createElement('div');
-            div.className = 'objective-card p-4 rounded-lg';
-            div.innerHTML = `
+
+    return await response.json();
+  }
+
+  // Results display
+  function displayResults(result) {
+    const script = result?.educational_script;
+
+    if (!script) {
+      showAlert(
+        "No educational script was generated. Please try again.",
+        "warning",
+      );
+      return;
+    }
+
+    // Update title and badges
+    document.getElementById("scriptTitleText").textContent =
+      script.title || "Educational Content";
+    document.getElementById("difficultyBadge").textContent =
+      result.difficulty_level || "Intermediate";
+    document.getElementById("audienceBadge").textContent =
+      result.target_audience || "General Audience";
+
+    // Display learning objectives
+    displayObjectives(script.learning_objectives || []);
+
+    // Display content sections
+    displaySections(script.sections || []);
+
+    // Display assessments
+    displayAssessments(script.assessments || []);
+
+    // Show results section
+    document.getElementById("resultsSection").classList.remove("hidden");
+
+    // Scroll to results
+    document
+      .getElementById("resultsSection")
+      .scrollIntoView({ behavior: "smooth" });
+  }
+
+  function displayObjectives(objectives) {
+    const container = document.getElementById("objectivesList");
+    container.innerHTML = "";
+
+    if (!objectives || objectives.length === 0) {
+      container.innerHTML =
+        '<p class="text-gray-500 italic">No learning objectives generated.</p>';
+      return;
+    }
+
+    objectives.forEach((obj, index) => {
+      // Handle both string and object formats, with null safety
+      const objectiveText =
+        typeof obj === "string" ? obj : obj?.objective || "Learning objective";
+      // API returns bloom_level, but fallback to level for backwards compatibility
+      const level =
+        typeof obj === "object"
+          ? obj?.bloom_level || obj?.level || "understand"
+          : "understand";
+      const measurable =
+        typeof obj === "object" ? (obj?.measurable ?? true) : true;
+
+      // Safely capitalize the level
+      const levelDisplay =
+        level && typeof level === "string"
+          ? level.charAt(0).toUpperCase() + level.slice(1)
+          : "Understand";
+
+      const div = document.createElement("div");
+      div.className = "objective-card p-4 rounded-lg";
+      div.innerHTML = `
                 <div class="flex items-start space-x-3">
                     <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
                         ${index + 1}
@@ -380,223 +428,239 @@
                                 <span>🎯</span>
                                 <span>Bloom's Level: ${levelDisplay}</span>
                             </span>
-                            ${measurable ? '<span class="flex items-center space-x-1"><span>✅</span><span>Measurable</span></span>' : ''}
+                            ${measurable ? '<span class="flex items-center space-x-1"><span>✅</span><span>Measurable</span></span>' : ""}
                         </div>
                     </div>
                 </div>
             `;
-            container.appendChild(div);
-        });
+      container.appendChild(div);
+    });
+  }
+
+  function displaySections(sections) {
+    const container = document.getElementById("sectionsList");
+    container.innerHTML = "";
+
+    if (!sections || sections.length === 0) {
+      container.innerHTML =
+        '<p class="text-gray-500 italic">No content sections generated.</p>';
+      return;
     }
-    
-    function displaySections(sections) {
-        const container = document.getElementById('sectionsList');
-        container.innerHTML = '';
-        
-        if (!sections || sections.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 italic">No content sections generated.</p>';
-            return;
-        }
-        
-        sections.forEach((section, index) => {
-            const div = document.createElement('div');
-            div.className = 'section-card p-6 rounded-lg';
-            div.innerHTML = `
+
+    sections.forEach((section, index) => {
+      const div = document.createElement("div");
+      div.className = "section-card p-6 rounded-lg";
+      div.innerHTML = `
                 <div class="flex items-start space-x-3">
                     <div class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
                         ${index + 1}
                     </div>
                     <div class="flex-1">
-                        <h5 class="text-lg font-semibold text-gray-900 mb-2">${section?.title || 'Untitled Section'}</h5>
-                        <p class="text-gray-700 leading-relaxed">${section?.content || 'No content available.'}</p>
-                        ${section?.duration_minutes ? `<div class="mt-3 text-sm text-gray-500">⏱️ Estimated duration: ${section.duration_minutes} minutes</div>` : ''}
+                        <h5 class="text-lg font-semibold text-gray-900 mb-2">${section?.title || "Untitled Section"}</h5>
+                        <p class="text-gray-700 leading-relaxed">${section?.content || "No content available."}</p>
+                        ${section?.duration_minutes ? `<div class="mt-3 text-sm text-gray-500">⏱️ Estimated duration: ${section.duration_minutes} minutes</div>` : ""}
                     </div>
                 </div>
             `;
-            container.appendChild(div);
-        });
+      container.appendChild(div);
+    });
+  }
+
+  function displayAssessments(assessments) {
+    const container = document.getElementById("assessmentsList");
+    container.innerHTML = "";
+
+    if (!assessments || assessments.length === 0) {
+      container.innerHTML =
+        '<p class="text-gray-500 italic">No assessments generated.</p>';
+      return;
     }
-    
-    function displayAssessments(assessments) {
-        const container = document.getElementById('assessmentsList');
-        container.innerHTML = '';
-        
-        if (!assessments || assessments.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 italic">No assessments generated.</p>';
-            return;
-        }
-        
-        assessments.forEach((assessment, index) => {
-            const div = document.createElement('div');
-            div.className = 'assessment-card p-6 rounded-lg';
-            
-            let questionsHtml = '';
-            if (assessment?.questions && assessment.questions.length > 0) {
-                questionsHtml = '<div class="mt-4"><h6 class="font-medium text-gray-900 mb-2">Questions:</h6><ul class="space-y-2">';
-                assessment.questions.forEach((q, qIndex) => {
-                    const questionText = typeof q === 'string' ? q : (q?.question || 'Question');
-                    const points = typeof q === 'object' ? q?.points : null;
-                    questionsHtml += `
+
+    assessments.forEach((assessment, index) => {
+      const div = document.createElement("div");
+      div.className = "assessment-card p-6 rounded-lg";
+
+      let questionsHtml = "";
+      if (assessment?.questions && assessment.questions.length > 0) {
+        questionsHtml =
+          '<div class="mt-4"><h6 class="font-medium text-gray-900 mb-2">Questions:</h6><ul class="space-y-2">';
+        assessment.questions.forEach((q, qIndex) => {
+          const questionText =
+            typeof q === "string" ? q : q?.question || "Question";
+          const points = typeof q === "object" ? q?.points : null;
+          questionsHtml += `
                         <li class="flex items-start space-x-2">
                             <span class="flex-shrink-0 w-6 h-6 bg-yellow-500 text-white rounded-full flex items-center justify-center text-xs font-bold">${qIndex + 1}</span>
                             <div class="flex-1">
                                 <span class="text-gray-700">${questionText}</span>
-                                ${points ? `<span class="ml-2 text-sm text-gray-500">(${points} points)</span>` : ''}
+                                ${points ? `<span class="ml-2 text-sm text-gray-500">(${points} points)</span>` : ""}
                             </div>
                         </li>
                     `;
-                });
-                questionsHtml += '</ul></div>';
-            }
-            
-            div.innerHTML = `
+        });
+        questionsHtml += "</ul></div>";
+      }
+
+      div.innerHTML = `
                 <div class="flex items-start space-x-3">
                     <div class="flex-shrink-0 w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
                         ${index + 1}
                     </div>
                     <div class="flex-1">
-                        <h5 class="text-lg font-semibold text-gray-900 mb-2">${assessment?.title || assessment?.type || 'Assessment'}</h5>
+                        <h5 class="text-lg font-semibold text-gray-900 mb-2">${assessment?.title || assessment?.type || "Assessment"}</h5>
                         ${questionsHtml}
-                        ${assessment?.rubric ? `<div class="mt-4 p-3 bg-yellow-50 rounded-lg"><strong>Rubric:</strong> <span class="text-gray-700">${assessment.rubric}</span></div>` : ''}
+                        ${assessment?.rubric ? `<div class="mt-4 p-3 bg-yellow-50 rounded-lg"><strong>Rubric:</strong> <span class="text-gray-700">${assessment.rubric}</span></div>` : ""}
                     </div>
                 </div>
             `;
-            container.appendChild(div);
-        });
+      container.appendChild(div);
+    });
+  }
+
+  // Manim code generation
+  async function generateManimCode() {
+    if (!currentGenerationId) {
+      showAlert(
+        "No content generated yet. Please generate educational content first.",
+        "warning",
+      );
+      return;
     }
-    
-    // Manim code generation
-    async function generateManimCode() {
-        if (!currentGenerationId) {
-            showAlert('No content generated yet. Please generate educational content first.', 'warning');
-            return;
-        }
-        
-        try {
-            showAlert('Generating Manim code...', 'info');
-            
-            const response = await fetch(`/api/v1/content/generate/manim/${currentGenerationId}`, {
-                method: 'POST'
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to generate Manim code');
-            }
-            
-            const result = await response.json();
-            currentManimCode = result.manim_code;
-            
-            // Display Manim code
-            document.getElementById('manimCode').textContent = result.manim_code;
-            
-            // Display validation info
-            displayManimValidation(result.validation);
-            
-            // Switch to Manim tab
-            const manimTab = document.querySelector('[data-tab="manim"]');
-            switchResultsTab('manim', manimTab);
-            
-            showAlert('Manim code generated successfully!', 'success');
-            
-        } catch (error) {
-            console.error('Manim generation error:', error);
-            showAlert('Failed to generate Manim code. Please try again.', 'error');
-        }
+
+    try {
+      showAlert("Generating Manim code...", "info");
+
+      const response = await fetch(
+        `/api/v1/content/generate/manim/${currentGenerationId}`,
+        {
+          method: "POST",
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to generate Manim code");
+      }
+
+      const result = await response.json();
+      currentManimCode = result.manim_code;
+
+      // Display Manim code
+      document.getElementById("manimCode").textContent = result.manim_code;
+
+      // Display validation info
+      displayManimValidation(result.validation);
+
+      // Switch to Manim tab
+      const manimTab = document.querySelector('[data-tab="manim"]');
+      switchResultsTab("manim", manimTab);
+
+      showAlert("Manim code generated successfully!", "success");
+    } catch (error) {
+      console.error("Manim generation error:", error);
+      showAlert("Failed to generate Manim code. Please try again.", "error");
     }
-    
-    function displayManimValidation(validation) {
-        const container = document.getElementById('manimValidation');
-        
-        if (!validation) {
-            container.innerHTML = '';
-            return;
-        }
-        
-        const statusColor = validation.valid ? 'green' : 'red';
-        const statusIcon = validation.valid ? '✅' : '❌';
-        
-        container.innerHTML = `
+  }
+
+  function displayManimValidation(validation) {
+    const container = document.getElementById("manimValidation");
+
+    if (!validation) {
+      container.innerHTML = "";
+      return;
+    }
+
+    const statusColor = validation.valid ? "green" : "red";
+    const statusIcon = validation.valid ? "✅" : "❌";
+
+    container.innerHTML = `
             <div class="bg-${statusColor}-50 border border-${statusColor}-200 rounded-lg p-4">
                 <div class="flex items-center space-x-2 mb-2">
                     <span>${statusIcon}</span>
                     <span class="font-medium text-${statusColor}-900">
-                        Code Validation: ${validation.valid ? 'Valid' : 'Invalid'}
+                        Code Validation: ${validation.valid ? "Valid" : "Invalid"}
                     </span>
                 </div>
                 <div class="text-sm text-${statusColor}-700 space-y-1">
-                    ${validation.line_count ? `<div>📄 Lines of code: ${validation.line_count}</div>` : ''}
-                    ${validation.estimated_duration ? `<div>⏱️ Estimated duration: ${validation.estimated_duration} seconds</div>` : ''}
-                    ${validation.errors && validation.errors.length > 0 ? `<div>❌ Errors: ${validation.errors.join(', ')}</div>` : ''}
+                    ${validation.line_count ? `<div>📄 Lines of code: ${validation.line_count}</div>` : ""}
+                    ${validation.estimated_duration ? `<div>⏱️ Estimated duration: ${validation.estimated_duration} seconds</div>` : ""}
+                    ${validation.errors && validation.errors.length > 0 ? `<div>❌ Errors: ${validation.errors.join(", ")}</div>` : ""}
                 </div>
             </div>
         `;
+  }
+
+  // Utility functions
+  function downloadManimCode() {
+    if (!currentManimCode) {
+      showAlert("No Manim code available to download.", "warning");
+      return;
     }
-    
-    // Utility functions
-    function downloadManimCode() {
-        if (!currentManimCode) {
-            showAlert('No Manim code available to download.', 'warning');
-            return;
-        }
-        
-        const blob = new Blob([currentManimCode], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'educational_presentation.py';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        showAlert('Manim code downloaded successfully!', 'success');
+
+    const blob = new Blob([currentManimCode], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "educational_presentation.py";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showAlert("Manim code downloaded successfully!", "success");
+  }
+
+  function copyManimCode() {
+    if (!currentManimCode) {
+      showAlert("No Manim code available to copy.", "warning");
+      return;
     }
-    
-    function copyManimCode() {
-        if (!currentManimCode) {
-            showAlert('No Manim code available to copy.', 'warning');
-            return;
-        }
-        
-        navigator.clipboard.writeText(currentManimCode).then(() => {
-            showAlert('Manim code copied to clipboard!', 'success');
-        }).catch(() => {
-            showAlert('Failed to copy code to clipboard.', 'error');
-        });
+
+    navigator.clipboard
+      .writeText(currentManimCode)
+      .then(() => {
+        showAlert("Manim code copied to clipboard!", "success");
+      })
+      .catch(() => {
+        showAlert("Failed to copy code to clipboard.", "error");
+      });
+  }
+
+  function downloadScript() {
+    if (!currentEducationalScript) {
+      showAlert("No educational script available to download.", "warning");
+      return;
     }
-    
-    function downloadScript() {
-        if (!currentEducationalScript) {
-            showAlert('No educational script available to download.', 'warning');
-            return;
-        }
-        
-        const blob = new Blob([JSON.stringify(currentEducationalScript, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'educational_script.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        showAlert('Educational script downloaded successfully!', 'success');
-    }
-    
-    function showManimInstructions() {
-        document.getElementById('instructionsModal').classList.remove('hidden');
-    }
-    
-    function hideInstructions() {
-        document.getElementById('instructionsModal').classList.add('hidden');
-    }
-    
-    // Close modal when clicking outside
-    document.getElementById('instructionsModal').addEventListener('click', (e) => {
-        if (e.target.id === 'instructionsModal') {
-            hideInstructions();
-        }
+
+    const blob = new Blob([JSON.stringify(currentEducationalScript, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "educational_script.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showAlert("Educational script downloaded successfully!", "success");
+  }
+
+  function showManimInstructions() {
+    document.getElementById("instructionsModal").classList.remove("hidden");
+  }
+
+  function hideInstructions() {
+    document.getElementById("instructionsModal").classList.add("hidden");
+  }
+
+  // Close modal when clicking outside
+  document
+    .getElementById("instructionsModal")
+    .addEventListener("click", (e) => {
+      if (e.target.id === "instructionsModal") {
+        hideInstructions();
+      }
     });
 </script>
 {% endblock %}

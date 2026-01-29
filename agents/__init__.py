@@ -5,6 +5,7 @@ Strands Agents Integration for Educational Content Generator
 from .base_agent import BaseEducationalAgent
 from .pedagogy_workflow import PedagogyWorkflow
 from .agent_factory import AgentFactory
+from .manim_generation_agent import ManimGenerationAgent
 from .exceptions import (
     AgentError,
     AgentInitializationError,
@@ -23,6 +24,7 @@ __all__ = [
     "BaseEducationalAgent",
     "PedagogyWorkflow", 
     "AgentFactory",
+    "ManimGenerationAgent",
     # Exceptions
     "AgentError",
     "AgentInitializationError",
