@@ -1,0 +1,95 @@
+{
+  "storage_id": "8b69da13-7463-41ad-8ede-4d929c488215",
+  "content_type": "text",
+  "content_hash": "325625d6faae7d34e5f1eb60f0e11ffdd74c2e056942f4ad1441835fbb3b2321",
+  "stored_at": "2026-01-28T12:16:46.413791",
+  "generation_id": "32329bcc-64b6-4ef0-a068-0c7b07bc750b",
+  "original_metadata": {
+    "topic": "Vector 3d",
+    "difficulty_level": "intermediate",
+    "target_audience": "high school students",
+    "learning_goals": [
+      "vector addition",
+      "vector subtraction",
+      "vector dot product"
+    ],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 1040,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 1028
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "**Vectors** are mathematical quantities that have **both magnitude and direction**, unlike scalars which have only magnitude. They are commonly used in physics, mathematics, and engineering to represent quantities such as **displacement, velocity, force, and acceleration**. A vector can be represented **graphically** as a directed line segment (arrow), where the length shows its magnitude and the arrowhead shows its direction. **Algebraically**, vectors are written using components, for example (\\vec{v} = (v_x, v_y)) in 2D or ((v_x, v_y, v_z)) in 3D. Basic operations on vectors include **addition**, **subtraction**, and **scalar multiplication**. Important concepts related to vectors are the **dot product**, which gives a scalar and measures how aligned two vectors are, and the **cross product**, which gives a vector perpendicular to the plane of the two vectors. Vectors are essential for describing motion and forces in real-world problems and form a foundation for many advanced topics in science and engineering.",
+        "warnings": [
+          "Content may not be educational (score: 0.01). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.006756756756756757,
+          "educational_indicators": 1,
+          "total_words": 148,
+          "academic_score": 0.006756756756756757,
+          "quality_score": 0.483,
+          "word_count": 148,
+          "sentence_count": 7,
+          "character_count": 1028,
+          "vocabulary_diversity": 0.453,
+          "average_word_length": 5.95,
+          "average_sentence_length": 21.14,
+          "complexity_ratio": 0.392,
+          "has_structure": false,
+          "has_numerical_data": false
+        },
+        "content_hash": "f9edc7cf4ba5eb40"
+      }
+    ],
+    "all_warnings": [
+      "Content may not be educational (score: 0.01). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.006756756756756757,
+      "educational_indicators": 1,
+      "total_words": 148,
+      "academic_score": 0.006756756756756757,
+      "quality_score": 0.483,
+      "word_count": 148,
+      "sentence_count": 7,
+      "character_count": 1028,
+      "vocabulary_diversity": 0.453,
+      "average_word_length": 5.95,
+      "average_sentence_length": 21.14,
+      "complexity_ratio": 0.392,
+      "has_structure": false,
+      "has_numerical_data": false
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "32329bcc-64b6-4ef0-a068-0c7b07bc750b",
+    "processing_start": "2026-01-28T12:16:46.413770",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 1028,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 148,
+    "character_count": 1028,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

@@ -1,0 +1,181 @@
+<!-- Input Tabs Component -->
+<div class="bg-white rounded-lg card-shadow p-6 mb-8">
+    <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-2">Create Educational Content</h2>
+        <p class="text-gray-600">Transform your content into structured, pedagogically sound learning experiences</p>
+    </div>
+    
+    <!-- Tab Navigation -->
+    <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-6">
+        <button 
+            class="tab-button flex-1 py-3 px-4 rounded-md font-medium transition-all duration-200 tab-active" 
+            data-tab="text"
+            onclick="switchTab('text', this)"
+        >
+            📝 Text Input
+        </button>
+        <button 
+            class="tab-button flex-1 py-3 px-4 rounded-md font-medium transition-all duration-200 text-gray-600 hover:text-gray-900" 
+            data-tab="file"
+            onclick="switchTab('file', this)"
+        >
+            📄 File Upload
+        </button>
+        <button 
+            class="tab-button flex-1 py-3 px-4 rounded-md font-medium transition-all duration-200 text-gray-600 hover:text-gray-900" 
+            data-tab="url"
+            onclick="switchTab('url', this)"
+        >
+            🌐 Web URL
+        </button>
+    </div>
+    
+    <!-- Content Form -->
+    <form id="contentForm" class="space-y-6">
+        <!-- Text Input Tab -->
+        <div id="text-tab" class="tab-content">
+            <div class="space-y-2">
+                <label for="textContent" class="block text-sm font-medium text-gray-700">
+                    Educational Content
+                </label>
+                <textarea 
+                    id="textContent" 
+                    name="content" 
+                    rows="8"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Enter your educational content here... 
+
+For example:
+Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed.
+
+Key concepts include:
+- Supervised learning: Learning from labeled examples
+- Unsupervised learning: Finding patterns in unlabeled data
+- Neural networks: Computing systems inspired by biological neural networks"
+                    required
+                ></textarea>
+                <p class="text-sm text-gray-500">Minimum 50 characters, maximum 100,000 characters</p>
+            </div>
+        </div>
+        
+        <!-- File Upload Tab -->
+        <div id="file-tab" class="tab-content hidden">
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">
+                    Upload Educational File
+                </label>
+                <div 
+                    class="file-upload-area border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer"
+                    id="fileUpload"
+                >
+                    <div class="space-y-2">
+                        <div class="text-4xl">📁</div>
+                        <div class="text-lg font-medium text-gray-900">
+                            Drag and drop a file here, or click to select
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            Supported formats: PDF, DOC, DOCX, TXT (max 10MB)
+                        </div>
+                    </div>
+                    <input 
+                        type="file" 
+                        id="fileInput" 
+                        name="file" 
+                        accept=".pdf,.doc,.docx,.txt" 
+                        class="hidden"
+                    >
+                </div>
+                <div id="fileInfo" class="hidden bg-blue-50 border border-blue-200 rounded-lg p-4"></div>
+            </div>
+        </div>
+        
+        <!-- URL Input Tab -->
+        <div id="url-tab" class="tab-content hidden">
+            <div class="space-y-2">
+                <label for="urlInput" class="block text-sm font-medium text-gray-700">
+                    Web URL
+                </label>
+                <input 
+                    type="url" 
+                    id="urlInput" 
+                    name="url" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://example.com/educational-content"
+                >
+                <p class="text-sm text-gray-500">Enter a URL to educational content (articles, documentation, tutorials)</p>
+            </div>
+        </div>
+        
+        <!-- Common Form Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-gray-200">
+            <div class="space-y-2">
+                <label for="topic" class="block text-sm font-medium text-gray-700">
+                    Topic (Optional)
+                </label>
+                <input 
+                    type="text" 
+                    id="topic" 
+                    name="topic" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., Introduction to Machine Learning"
+                >
+            </div>
+            
+            <div class="space-y-2">
+                <label for="difficulty" class="block text-sm font-medium text-gray-700">
+                    Difficulty Level
+                </label>
+                <select 
+                    id="difficulty" 
+                    name="difficulty_level"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                    <option value="beginner">🟢 Beginner</option>
+                    <option value="intermediate" selected>🟡 Intermediate</option>
+                    <option value="advanced">🔴 Advanced</option>
+                </select>
+            </div>
+            
+            <div class="space-y-2">
+                <label for="audience" class="block text-sm font-medium text-gray-700">
+                    Target Audience
+                </label>
+                <input 
+                    type="text" 
+                    id="audience" 
+                    name="target_audience" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., High school students, College freshmen"
+                    required
+                >
+            </div>
+            
+            <div class="space-y-2">
+                <label for="goals" class="block text-sm font-medium text-gray-700">
+                    Learning Goals (Optional)
+                </label>
+                <input 
+                    type="text" 
+                    id="goals" 
+                    name="learning_goals" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Separate multiple goals with commas"
+                >
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="pt-6">
+            <button 
+                type="submit" 
+                class="btn-primary w-full py-4 px-6 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                id="generateBtn"
+            >
+                <span class="flex items-center justify-center space-x-2">
+                    <span>🚀</span>
+                    <span>Generate Educational Content</span>
+                </span>
+            </button>
+        </div>
+    </form>
+</div>

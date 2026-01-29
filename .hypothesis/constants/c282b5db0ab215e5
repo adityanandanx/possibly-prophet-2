@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/services/content_service.py
+# hypothesis_version: 6.151.2
+
+['15 minutes', 'Generated Content', 'How does this apply?', 'Introduction', 'Main Content', 'animations', 'apply', 'assessments', 'completed', 'completed_at', 'content', 'content_type', 'created_at', 'difficulty_level', 'duration_minutes', 'educational_script', 'error_message', 'estimated_duration', 'failed', 'file', 'filename', 'general', 'generation_id', 'ignore', 'input_count', 'input_type', 'inputs', 'intermediate', 'intro_animation', 'learning_goals', 'learning_objectives', 'level', 'main_animation', 'metadata', 'multi_input', 'objective', 'preferences', 'processing', 'questions', 'quiz', 'rubric', 'sections', 'source_url', 'status', 'target_audience', 'text', 'title', 'topic', 'type', 'understand', 'unknown', 'url', 'utf-8']

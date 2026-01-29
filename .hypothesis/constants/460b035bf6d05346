@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/services/file_storage.py
+# hypothesis_version: 6.151.2
+
+[100, 1024, 8192, '.doc', '.docx', '.pdf', '.txt', 'application/msword', 'application/pdf', 'content_type', 'cp1252', 'created_at', 'error', 'file_id', 'file_size', 'filename', 'iso-8859-1', 'latin-1', 'mime_type', 'modified_at', 'rb', 'size', 'text/plain', 'total_files', 'total_size_bytes', 'total_size_mb', 'upload_dir', 'utf-8', 'valid', 'wb']

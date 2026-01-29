@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/services/vector_db.py
+# hypothesis_version: 6.151.2
+
+[', ', 'content', 'content_count', 'description', 'distance', 'distances', 'documents', 'educational_content', 'educational_scripts', 'estimated_duration', 'id', 'ids', 'metadata', 'metadatas', 'num_assessments', 'num_objectives', 'num_sections', 'prerequisites_str', 'scripts_count', 'tags_str', 'title', 'total_items']

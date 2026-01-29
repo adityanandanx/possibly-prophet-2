@@ -1,0 +1,35 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Educational Content Generator - AI-powered educational content generation system"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.128.0",
+    "pydantic-settings>=2.12.0",
+    "strands-agents>=1.23.0",
+    "uvicorn>=0.40.0",
+    "python-multipart>=0.0.9", # For file uploads
+    "aiofiles>=24.1.0", # For async file operations
+    "requests>=2.32.0", # For URL processing
+    "beautifulsoup4>=4.12.0", # For web scraping
+    "python-magic>=0.4.27", # For file type detection
+    "pypdf>=6.0.0", # For PDF processing (modern replacement for PyPDF2)
+    "pdfplumber>=0.11.0", # For advanced PDF text extraction with table support
+    "python-docx>=1.1.0", # For DOCX processing
+    "chromadb>=1.4.1",
+    "pypdf>=6.6.2",
+    "pdfplumber>=0.11.9",
+    "manim>=0.19.2",
+    "jinja2>=3.1.6",
+    "python-dotenv>=1.2.1",
+    "strands-amazon-nova>=1.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "httpx>=0.27.0",           # For testing FastAPI
+    "hypothesis>=6.100.0",     # For property-based testing
+]

@@ -1,0 +1,61 @@
+{
+  "storage_id": "9f65591a-bb12-45b2-99ab-2c88f2809b35",
+  "content_type": "text",
+  "content_hash": "6a9cbdf4c467c17326cf4210070168d41b312dae4b915ce903c685ca0a9cf303",
+  "stored_at": "2026-01-28T11:08:40.094039",
+  "generation_id": "44a8a41c-0c23-4f85-b986-13b4a32b33ae",
+  "original_metadata": {
+    "topic": "Introduction to Machine Learning",
+    "difficulty_level": "intermediate",
+    "target_audience": "Computer science students",
+    "learning_goals": [
+      "Understand ML basics",
+      "Identify ML types",
+      "Recognize applications"
+    ],
+    "original_content_length": 599,
+    "processed_content_length": 560
+  },
+  "validation_result": {
+    "is_valid": true,
+    "sanitized_content": "Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed. Key concepts include: - Supervised learning: Learning from labeled examples - Unsupervised learning: Finding patterns in unlabeled data - Neural networks: Computing systems inspired by biological neural networks - Training data: The dataset used to teach the algorithm Applications of machine learning include image recognition, natural language processing, recommendation systems, and autonomous vehicles.",
+    "warnings": [
+      "Content may contain inappropriate material",
+      "Content may not be educational (score: 0.01). Consider adding more educational context."
+    ],
+    "errors": [],
+    "metadata": {
+      "educational_score": 0.013333333333333334,
+      "educational_indicators": 1,
+      "total_words": 75,
+      "academic_score": 0.0,
+      "quality_score": 0.5,
+      "word_count": 75,
+      "sentence_count": 2,
+      "character_count": 560,
+      "vocabulary_diversity": 0.68,
+      "average_word_length": 6.48,
+      "average_sentence_length": 37.5,
+      "complexity_ratio": 0.573,
+      "has_structure": false,
+      "has_numerical_data": false
+    },
+    "content_hash": "785afdc546a12d13"
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "44a8a41c-0c23-4f85-b986-13b4a32b33ae",
+    "processing_start": "2026-01-28T11:08:40.094022",
+    "content_sanitized": true
+  },
+  "content_length": 560,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 75,
+    "character_count": 560,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

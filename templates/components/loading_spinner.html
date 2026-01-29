@@ -1,0 +1,93 @@
+<!-- Loading Spinner Component -->
+<div id="loading" class="bg-white rounded-lg card-shadow p-8 text-center hidden">
+    <div class="flex flex-col items-center space-y-4">
+        <div class="spinner mx-auto"></div>
+        <div class="space-y-2">
+            <h3 class="text-lg font-semibold text-gray-900">Generating Educational Content</h3>
+            <p class="text-gray-600">Our AI agents are working to transform your content...</p>
+            <div class="text-sm text-gray-500">
+                <div id="loadingSteps" class="space-y-1">
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                        <span>Processing content</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Steps Animation -->
+<script>
+function animateLoadingSteps() {
+    const steps = [
+        "🔍 Analyzing content structure...",
+        "🎯 Generating learning objectives...", 
+        "📝 Creating assessments...",
+        "🎨 Designing visualizations...",
+        "📖 Crafting narrative flow...",
+        "✨ Finalizing educational script..."
+    ];
+    
+    const stepsContainer = document.getElementById('loadingSteps');
+    let currentStep = 0;
+    
+    const interval = setInterval(() => {
+        if (currentStep < steps.length) {
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'flex items-center justify-center space-x-2 opacity-0 transition-opacity duration-500';
+            stepDiv.innerHTML = `
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>${steps[currentStep]}</span>
+            `;
+            
+            stepsContainer.appendChild(stepDiv);
+            
+            // Animate in
+            setTimeout(() => stepDiv.classList.remove('opacity-0'), 100);
+            
+            currentStep++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 2000);
+    
+    return interval;
+}
+
+let loadingInterval;
+
+function showLoading(show) {
+    const loading = document.getElementById('loading');
+    const generateBtn = document.getElementById('generateBtn');
+    
+    if (show) {
+        loading.classList.remove('hidden');
+        generateBtn.disabled = true;
+        generateBtn.innerHTML = `
+            <span class="flex items-center justify-center space-x-2">
+                <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Generating...</span>
+            </span>
+        `;
+        
+        // Reset and start loading animation
+        document.getElementById('loadingSteps').innerHTML = '';
+        loadingInterval = animateLoadingSteps();
+    } else {
+        loading.classList.add('hidden');
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = `
+            <span class="flex items-center justify-center space-x-2">
+                <span>🚀</span>
+                <span>Generate Educational Content</span>
+            </span>
+        `;
+        
+        // Clear loading animation
+        if (loadingInterval) {
+            clearInterval(loadingInterval);
+        }
+    }
+}
+</script>

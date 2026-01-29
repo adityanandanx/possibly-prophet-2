@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/agents/pedagogy_workflow.py
+# hypothesis_version: 6.151.2
+
+['1.0', 'Animation 1', 'Objective 1', 'Objective 2', 'Section 1', 'agents_used', 'animations', 'assessment', 'assessments', 'concept', 'content', 'content_structuring', 'educational', 'error', 'flow', 'generation_timestamp', 'learning_objectives', 'mathematical', 'metadata', 'narrative', 'narrative_flow', 'original_content', 'previous_results', 'processed_content', 'questions', 'quiz', 'sections', 'sequential', 'title', 'tone', 'type', 'visualization', 'workflow_version']

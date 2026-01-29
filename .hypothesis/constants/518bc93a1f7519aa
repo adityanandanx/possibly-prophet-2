@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/agents/pedagogy_workflow.py
+# hypothesis_version: 6.151.2
+
+['1.0', 'Animation 1', 'Main Content', 'Objective 1', 'Objective 2', 'Section 1', 'UnexpectedError', 'agent_name', 'agent_type', 'agents_used', 'animations', 'assessment', 'assessments', 'concept', 'content', 'content_structuring', 'educational', 'error', 'error_details', 'error_type', 'execution_id', 'execution_time', 'failed_agents', 'fallback', 'flow', 'generation_timestamp', 'learning_objectives', 'mathematical', 'metadata', 'narrative', 'narrative_flow', 'objectives', 'original_content', 'previous_results', 'processed_content', 'processing_timestamp', 'questions', 'quiz', 'sections', 'sequential', 'start_time', 'successful_agents', 'title', 'to_dict', 'tone', 'type', 'visualization', 'workflow_metadata', 'workflow_version']

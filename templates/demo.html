@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Demo - Educational Content Generator{% endblock %}
+
+{% block content %}
+<!-- Demo Hero Section -->
+<div class="text-center mb-12">
+    <div class="gradient-bg rounded-2xl p-8 text-white card-shadow">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            🎪 Live Demo
+        </h1>
+        <p class="text-xl md:text-2xl mb-6 opacity-90">
+            See the Educational Content Generator in action with pre-loaded examples
+        </p>
+    </div>
+</div>
+
+<!-- Quick Demo Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <!-- Text Demo -->
+    <div class="bg-white rounded-lg card-shadow p-6">
+        <div class="text-center mb-4">
+            <div class="text-4xl mb-2">📝</div>
+            <h3 class="text-xl font-semibold">Text Input Demo</h3>
+        </div>
+        <p class="text-gray-600 mb-4">
+            Transform a machine learning article into structured educational content
+        </p>
+        <button 
+            onclick="loadTextDemo()" 
+            class="btn-primary w-full py-3 px-4 text-white font-semibold rounded-lg"
+        >
+            Load Text Demo
+        </button>
+    </div>
+    
+    <!-- File Demo -->
+    <div class="bg-white rounded-lg card-shadow p-6">
+        <div class="text-center mb-4">
+            <div class="text-4xl mb-2">📄</div>
+            <h3 class="text-xl font-semibold">File Upload Demo</h3>
+        </div>
+        <p class="text-gray-600 mb-4">
+            Process educational documents and extract structured content
+        </p>
+        <button 
+            onclick="showFileDemo()" 
+            class="btn-primary w-full py-3 px-4 text-white font-semibold rounded-lg"
+        >
+            Show File Demo
+        </button>
+    </div>
+    
+    <!-- URL Demo -->
+    <div class="bg-white rounded-lg card-shadow p-6">
+        <div class="text-center mb-4">
+            <div class="text-4xl mb-2">🌐</div>
+            <h3 class="text-xl font-semibold">URL Processing Demo</h3>
+        </div>
+        <p class="text-gray-600 mb-4">
+            Extract and transform content from educational websites
+        </p>
+        <button 
+            onclick="loadUrlDemo()" 
+            class="btn-primary w-full py-3 px-4 text-white font-semibent rounded-lg"
+        >
+            Load URL Demo
+        </button>
+    </div>
+</div>
+
+<!-- Sample Results Preview -->
+<div class="bg-white rounded-lg card-shadow p-8 mb-12">
+    <h2 class="text-2xl font-semibold text-gray-900 mb-6">Sample Generated Content</h2>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Educational Script Preview -->
+        <div>
+            <h3 class="text-lg font-semibold mb-4 flex items-center">
+                <span class="mr-2">📚</span>
+                Educational Script
+            </h3>
+            <div class="bg-gray-50 rounded-lg p-4 space-y-4">
+                <div class="objective-card p-3 rounded">
+                    <div class="font-medium text-sm">Learning Objective 1</div>
+                    <div class="text-sm text-gray-600">Understand machine learning fundamentals</div>
+                </div>
+                <div class="section-card p-3 rounded">
+                    <div class="font-medium text-sm">Section: Introduction</div>
+                    <div class="text-sm text-gray-600">Overview of ML concepts and applications...</div>
+                </div>
+                <div class="assessment-card p-3 rounded">
+                    <div class="font-medium text-sm">Assessment</div>
+                    <div class="text-sm text-gray-600">Quiz: What is supervised learning?</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Manim Code Preview -->
+        <div>
+            <h3 class="text-lg font-semibold mb-4 flex items-center">
+                <span class="mr-2">🎬</span>
+                Generated Manim Code
+            </h3>
+            <div class="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-xs overflow-x-auto">
+                <div class="text-gray-500"># Generated Manim Animation Code</div>
+                <div>from manim import *</div>
+                <div></div>
+                <div>class EducationalPresentation(Scene):</div>
+                <div class="ml-4">def construct(self):</div>
+                <div class="ml-8">title = Text("Machine Learning")</div>
+                <div class="ml-8">self.play(Write(title))</div>
+                <div class="ml-8">self.wait(2)</div>
+                <div class="text-gray-500"># ... more animation code</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Showcase -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="text-center p-6 bg-white rounded-lg card-shadow">
+        <div class="text-3xl mb-3">🤖</div>
+        <h4 class="font-semibold mb-2">AI Agents</h4>
+        <p class="text-sm text-gray-600">5 specialized pedagogy agents</p>
+    </div>
+    
+    <div class="text-center p-6 bg-white rounded-lg card-shadow">
+        <div class="text-3xl mb-3">⚡</div>
+        <h4 class="font-semibold mb-2">Fast Processing</h4>
+        <p class="text-sm text-gray-600">Generate content in seconds</p>
+    </div>
+    
+    <div class="text-center p-6 bg-white rounded-lg card-shadow">
+        <div class="text-3xl mb-3">🎯</div>
+        <h4 class="font-semibold mb-2">Bloom's Taxonomy</h4>
+        <p class="text-sm text-gray-600">Pedagogically aligned objectives</p>
+    </div>
+    
+    <div class="text-center p-6 bg-white rounded-lg card-shadow">
+        <div class="text-3xl mb-3">💾</div>
+        <h4 class="font-semibold mb-2">Export Ready</h4>
+        <p class="text-sm text-gray-600">Download scripts and code</p>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="text-center">
+    <a href="/" class="btn-primary inline-flex items-center space-x-2 px-8 py-4 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+        <span>🚀</span>
+        <span>Try It Yourself</span>
+    </a>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const sampleTextContent = `Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed.
+
+Key concepts include:
+- Supervised learning: Learning from labeled examples where the algorithm learns to map inputs to correct outputs
+- Unsupervised learning: Finding patterns in unlabeled data without predetermined correct answers
+- Neural networks: Computing systems inspired by biological neural networks that can recognize patterns
+- Training data: The dataset used to teach the algorithm how to make predictions or decisions
+
+Applications of machine learning include:
+- Image recognition and computer vision
+- Natural language processing and translation
+- Recommendation systems for content and products
+- Autonomous vehicles and robotics
+- Medical diagnosis and drug discovery
+- Financial fraud detection and algorithmic trading
+
+The machine learning process typically involves data collection, preprocessing, model selection, training, evaluation, and deployment. Popular algorithms include linear regression, decision trees, random forests, support vector machines, and deep neural networks.`;
+
+    const sampleUrl = "https://en.wikipedia.org/wiki/Machine_learning";
+
+    function loadTextDemo() {
+        // Redirect to main page and populate form
+        window.location.href = "/?demo=text";
+    }
+    
+    function showFileDemo() {
+        showNotification("File demo: Upload any PDF, DOC, DOCX, or TXT file to see the extraction and transformation process!", "info");
+        window.location.href = "/?demo=file";
+    }
+    
+    function loadUrlDemo() {
+        // Redirect to main page and populate URL
+        window.location.href = `/?demo=url&url=${encodeURIComponent(sampleUrl)}`;
+    }
+    
+    // Check if we came from a demo link
+    window.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const demo = urlParams.get('demo');
+        
+        if (demo === 'text') {
+            // Switch to text tab and populate content
+            const textTab = document.querySelector('[data-tab="text"]');
+            if (textTab) {
+                switchTab('text', textTab);
+                document.getElementById('textContent').value = sampleTextContent;
+                document.getElementById('topic').value = "Introduction to Machine Learning";
+                document.getElementById('audience').value = "Computer science students";
+                document.getElementById('goals').value = "Understand ML basics, Identify ML types, Recognize applications";
+                showNotification("Demo content loaded! Click 'Generate Educational Content' to see the AI in action.", "success");
+            }
+        } else if (demo === 'file') {
+            // Switch to file tab
+            const fileTab = document.querySelector('[data-tab="file"]');
+            if (fileTab) {
+                switchTab('file', fileTab);
+                showNotification("Upload any educational document (PDF, DOC, DOCX, TXT) to see the extraction process!", "info");
+            }
+        } else if (demo === 'url') {
+            // Switch to URL tab and populate URL
+            const urlTab = document.querySelector('[data-tab="url"]');
+            const url = urlParams.get('url');
+            if (urlTab && url) {
+                switchTab('url', urlTab);
+                document.getElementById('urlInput').value = decodeURIComponent(url);
+                document.getElementById('topic').value = "Machine Learning Overview";
+                document.getElementById('audience').value = "General learners";
+                showNotification("Demo URL loaded! Click 'Generate Educational Content' to extract and transform web content.", "success");
+            }
+        }
+    });
+</script>
+{% endblock %}

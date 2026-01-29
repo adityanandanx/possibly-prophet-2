@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/api/__init__.py
+# hypothesis_version: 6.151.2
+
+['/content', '/health', 'content', 'health']

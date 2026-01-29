@@ -1,0 +1,95 @@
+{
+  "storage_id": "373ed7c5-ff09-4dd1-8db8-226f74e9edce",
+  "content_type": "text",
+  "content_hash": "f549f1e92e1aae8674fed574e8e3430a46df1abde4f3c21dcc62d49bc18d9e89",
+  "stored_at": "2026-01-28T23:53:39.325297",
+  "generation_id": "c82d9e4d-0865-4261-9168-3cb50c702834",
+  "original_metadata": {
+    "topic": "vectors",
+    "difficulty_level": "intermediate",
+    "target_audience": "high school students",
+    "learning_goals": [
+      "vector addition",
+      "vector subtraction",
+      "vector dot product"
+    ],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 43,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 43
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "vector 3d how to add and subtract 2 vectors",
+        "warnings": [
+          "Content may not be educational (score: 0.00). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.0,
+          "educational_indicators": 0,
+          "total_words": 9,
+          "academic_score": 0.0,
+          "quality_score": 0.402,
+          "word_count": 9,
+          "sentence_count": 1,
+          "character_count": 43,
+          "vocabulary_diversity": 0.778,
+          "average_word_length": 3.89,
+          "average_sentence_length": 9.0,
+          "complexity_ratio": 0.222,
+          "has_structure": false,
+          "has_numerical_data": true
+        },
+        "content_hash": "f549f1e92e1aae86"
+      }
+    ],
+    "all_warnings": [
+      "Content may not be educational (score: 0.00). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.0,
+      "educational_indicators": 0,
+      "total_words": 9,
+      "academic_score": 0.0,
+      "quality_score": 0.402,
+      "word_count": 9,
+      "sentence_count": 1,
+      "character_count": 43,
+      "vocabulary_diversity": 0.778,
+      "average_word_length": 3.89,
+      "average_sentence_length": 9.0,
+      "complexity_ratio": 0.222,
+      "has_structure": false,
+      "has_numerical_data": true
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "c82d9e4d-0865-4261-9168-3cb50c702834",
+    "processing_start": "2026-01-28T23:53:39.325239",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 43,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 9,
+    "character_count": 43,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/services/document_parser.py
+# hypothesis_version: 6.151.2
+
+[415, ' | ', '.doc', '.docx', '.pdf', '.txt', '/Author', '/CreationDate', '/Creator', '/ModDate', '/Producer', '/Subject', '/Title', 'Author', 'Creator', 'Producer', 'Subject', 'Title', '\\n{3,}', 'author', 'character_count', 'cp1252', 'creation_date', 'creator', 'direct_decode', 'encoding', 'extraction_method', 'failed_pages', 'file_size', 'file_type', 'filename', 'iso-8859-1', 'latin-1', 'line_count', 'metadata', 'modification_date', 'page_count', 'paragraph_count', 'pdfplumber', 'producer', 'pypdf', 'python-docx', 'subject', 'successful_pages', 'table_count', 'tables_found', 'text', 'title', 'utf-8', 'word_count']

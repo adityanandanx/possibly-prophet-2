@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/config/agents_config.py
+# hypothesis_version: 6.151.2
+
+[0.7, 120, 300, 4000, 'Assessment Agent', 'Narrative Agent', 'Visualization Agent', 'anthropic', 'assessment', 'content_structuring', 'description', 'failure_threshold', 'learning_objectives', 'max_retries', 'max_tokens', 'model_name', 'model_provider', 'name', 'narrative', 'parallel_execution', 'recovery_timeout', 'system_prompt', 'temperature', 'timeout', 'timeout_seconds', 'visualization']

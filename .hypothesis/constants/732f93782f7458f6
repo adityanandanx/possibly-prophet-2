@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/core/config.py
+# hypothesis_version: 6.151.2
+
+[300, 1024, 8000, '.doc', '.docx', '.env', '.pdf', '.txt', '0.0.0.0', 'INFO', 'application/msword', 'application/pdf', 'chroma_db', 'text/plain', 'uploads']

@@ -1,0 +1,91 @@
+{
+  "storage_id": "92122128-49f1-4545-8144-34948e25b7c1",
+  "content_type": "text",
+  "content_hash": "fe0311b50eb9cfb977dcb213704597c74ac2611b62c603f6b12debbd1793bf57",
+  "stored_at": "2026-01-28T12:19:52.062327",
+  "generation_id": "577171f7-d197-4593-ba59-7a2f8fb84450",
+  "original_metadata": {
+    "topic": null,
+    "difficulty_level": "intermediate",
+    "target_audience": "high school students",
+    "learning_goals": [],
+    "input_count": 1,
+    "original_inputs": [
+      {
+        "content_type": "text",
+        "content_length": 18,
+        "metadata": {
+          "source": "text_prompt"
+        }
+      }
+    ],
+    "combined_content_length": 18
+  },
+  "validation_result": {
+    "combined_validation": true,
+    "individual_results": [
+      {
+        "is_valid": true,
+        "sanitized_content": "vector 3d addition",
+        "warnings": [
+          "Content may not be educational (score: 0.00). Consider adding more educational context."
+        ],
+        "errors": [],
+        "metadata": {
+          "educational_score": 0.0,
+          "educational_indicators": 0,
+          "total_words": 3,
+          "academic_score": 0.0,
+          "quality_score": 0.481,
+          "word_count": 3,
+          "sentence_count": 1,
+          "character_count": 18,
+          "vocabulary_diversity": 0.667,
+          "average_word_length": 5.33,
+          "average_sentence_length": 3.0,
+          "complexity_ratio": 0.333,
+          "has_structure": false,
+          "has_numerical_data": false
+        },
+        "content_hash": "fe0311b50eb9cfb9"
+      }
+    ],
+    "all_warnings": [
+      "Content may not be educational (score: 0.00). Consider adding more educational context."
+    ],
+    "combined_metadata": {
+      "educational_score": 0.0,
+      "educational_indicators": 0,
+      "total_words": 3,
+      "academic_score": 0.0,
+      "quality_score": 0.481,
+      "word_count": 3,
+      "sentence_count": 1,
+      "character_count": 18,
+      "vocabulary_diversity": 0.667,
+      "average_word_length": 5.33,
+      "average_sentence_length": 3.0,
+      "complexity_ratio": 0.333,
+      "has_structure": false,
+      "has_numerical_data": false
+    }
+  },
+  "processing_metadata": {
+    "status": "processing",
+    "generation_id": "577171f7-d197-4593-ba59-7a2f8fb84450",
+    "processing_start": "2026-01-28T12:19:52.062300",
+    "multi_input": true,
+    "input_count": 1,
+    "content_combined": true
+  },
+  "content_length": 18,
+  "storage_version": "1.0",
+  "text_metadata": {
+    "word_count": 3,
+    "character_count": 18,
+    "line_count": 1,
+    "estimated_reading_time_minutes": 1,
+    "language_detected": null,
+    "text_complexity_score": null
+  }
+}

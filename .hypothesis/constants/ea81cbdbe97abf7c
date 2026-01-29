@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/api/endpoints/health.py
+# hypothesis_version: 6.151.2
+
+['/', '/detailed', 'agents', 'api', 'components', 'database', 'healthy', 'not_configured', 'service', 'status']

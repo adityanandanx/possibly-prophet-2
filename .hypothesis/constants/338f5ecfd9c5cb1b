@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/app/api/endpoints/content.py
+# hypothesis_version: 6.151.2
+
+[b'\rDOC', b'%PDF-', b'PK', b'\xd0\xcf\x11\xe0', 0.1, 200, 400, 404, 413, 415, 422, 500, 100000, ',', '.doc', '.docx', '.pdf', '.txt', '/', '/generate', '/text', '/upload', '/url', 'File is empty', 'Web URL to process', 'advanced', 'beginner', 'count', 'general', 'generations', 'http://', 'https://', 'intermediate', 'latin-1', 'source', 'text', 'text_prompt', 'utf-8']

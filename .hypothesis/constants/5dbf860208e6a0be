@@ -1,0 +1,4 @@
+# file: /home/aditya/projects/prophet2/backend/agents/base_agent.py
+# hypothesis_version: 6.151.2
+
+['agent_name', 'agent_type', 'description', 'metadata', 'name', 'processed_content', 'processing_timestamp', 'system_prompt']
