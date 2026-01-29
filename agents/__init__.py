@@ -16,13 +16,13 @@ from .exceptions import (
     WorkflowError,
     WorkflowExecutionError,
     WorkflowTimeoutError,
-    WorkflowValidationError
+    WorkflowValidationError,
 )
 from .retry_handler import CircuitBreaker, RetryHandler
 
 __all__ = [
     "BaseEducationalAgent",
-    "PedagogyWorkflow", 
+    "PedagogyWorkflow",
     "AgentFactory",
     "ManimGenerationAgent",
     # Exceptions
@@ -38,5 +38,5 @@ __all__ = [
     "WorkflowValidationError",
     # Retry and Circuit Breaker
     "CircuitBreaker",
-    "RetryHandler"
+    "RetryHandler",
 ]

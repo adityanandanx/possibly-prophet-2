@@ -47,6 +47,9 @@ Transform Content with AI{% endblock %} {% block content %}
 <!-- Results Section -->
 {% include 'components/results_display.html' %}
 
+<!-- Presentation Player -->
+{% include 'components/presentation_player.html' %}
+
 <!-- Features Section -->
 <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
   <div class="bg-white rounded-lg card-shadow p-6 text-center">
@@ -544,6 +547,11 @@ Transform Content with AI{% endblock %} {% block content %}
       const result = await response.json();
       currentManimCode = result.manim_code;
 
+      // Store slide specs for presentation player
+      if (result.slide_specs && result.slide_specs.length > 0) {
+        currentSlideSpecs = result.slide_specs;
+      }
+
       // Display Manim code
       document.getElementById("manimCode").textContent = result.manim_code;
 
@@ -662,5 +670,481 @@ Transform Content with AI{% endblock %} {% block content %}
         hideInstructions();
       }
     });
+
+  // ==========================================
+  // PRESENTATION PLAYER FUNCTIONALITY
+  // ==========================================
+
+  let slideSpecs = [];
+  let currentSlideIndex = 0;
+  let isPlaying = false;
+  let slidePanelOpen = false;
+
+  // Initialize presentation player with video and slide data
+  function openPresentationPlayer(videoUrl, slides, title) {
+    const player = document.getElementById("presentationPlayer");
+    const video = document.getElementById("presentationVideo");
+    const videoSource = video.querySelector("source");
+
+    // Set video source
+    videoSource.src = videoUrl;
+    video.load();
+
+    // Store slide specs
+    slideSpecs = slides || generateDefaultSlides();
+    currentSlideIndex = 0;
+
+    // Set title
+    document.getElementById("presentationTitle").textContent =
+      title || "Educational Presentation";
+
+    // Show player
+    player.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    // Setup video event listeners
+    setupVideoListeners();
+
+    // Generate slide UI elements
+    generateSlideUI();
+
+    // Show loading
+    document.getElementById("videoLoading").classList.remove("hidden");
+
+    // Add keyboard listeners
+    document.addEventListener("keydown", handleKeyPress);
+  }
+
+  function generateDefaultSlides() {
+    // Generate default slides based on educational script if no slide specs provided
+    if (!currentEducationalScript) return [];
+
+    const slides = [];
+    let cumulativeTime = 0;
+
+    // Title slide
+    slides.push({
+      slide_type: "title",
+      title: currentEducationalScript.title || "Educational Presentation",
+      start_time: 0,
+      duration: 3,
+    });
+    cumulativeTime += 3;
+
+    // Objectives slide
+    if (
+      currentEducationalScript.learning_objectives &&
+      currentEducationalScript.learning_objectives.length > 0
+    ) {
+      slides.push({
+        slide_type: "objectives",
+        title: "Learning Objectives",
+        start_time: cumulativeTime,
+        duration: 5,
+      });
+      cumulativeTime += 5;
+    }
+
+    // Content sections
+    if (currentEducationalScript.sections) {
+      currentEducationalScript.sections.forEach((section, i) => {
+        slides.push({
+          slide_type: "concept",
+          title: section.title || `Section ${i + 1}`,
+          start_time: cumulativeTime,
+          duration: 4,
+        });
+        cumulativeTime += 4;
+      });
+    }
+
+    // Conclusion
+    slides.push({
+      slide_type: "conclusion",
+      title: "Thank You!",
+      start_time: cumulativeTime,
+      duration: 3,
+    });
+
+    return slides;
+  }
+
+  function setupVideoListeners() {
+    const video = document.getElementById("presentationVideo");
+
+    video.onloadedmetadata = () => {
+      document.getElementById("totalTime").textContent = formatTime(
+        video.duration,
+      );
+      document.getElementById("videoLoading").classList.add("hidden");
+
+      // Recalculate slide times based on actual video duration if needed
+      if (slideSpecs.length > 0) {
+        recalculateSlideTimings(video.duration);
+      }
+
+      generateSlideMarkers();
+    };
+
+    video.ontimeupdate = () => {
+      updateProgress();
+      updateCurrentSlide();
+    };
+
+    video.onplay = () => {
+      isPlaying = true;
+      document.getElementById("playIcon").classList.add("hidden");
+      document.getElementById("pauseIcon").classList.remove("hidden");
+    };
+
+    video.onpause = () => {
+      isPlaying = false;
+      document.getElementById("playIcon").classList.remove("hidden");
+      document.getElementById("pauseIcon").classList.add("hidden");
+    };
+
+    video.onended = () => {
+      isPlaying = false;
+      document.getElementById("playIcon").classList.remove("hidden");
+      document.getElementById("pauseIcon").classList.add("hidden");
+    };
+
+    video.onerror = () => {
+      document.getElementById("videoLoading").classList.add("hidden");
+      showAlert("Failed to load video. Please try again.", "error");
+    };
+  }
+
+  function recalculateSlideTimings(totalDuration) {
+    if (slideSpecs.length === 0) return;
+
+    // Calculate total expected duration from slides
+    const totalSlideDuration = slideSpecs.reduce(
+      (sum, s) => sum + (s.duration || 3),
+      0,
+    );
+
+    // Scale factor to fit actual video duration
+    const scale = totalDuration / totalSlideDuration;
+
+    let cumulativeTime = 0;
+    slideSpecs.forEach((slide) => {
+      slide.start_time = cumulativeTime;
+      slide.duration = (slide.duration || 3) * scale;
+      cumulativeTime += slide.duration;
+    });
+  }
+
+  function generateSlideUI() {
+    // Generate thumbnails
+    const thumbnailsContainer = document.getElementById("slideThumbnails");
+    thumbnailsContainer.innerHTML = "";
+
+    slideSpecs.forEach((slide, index) => {
+      const thumb = document.createElement("div");
+      thumb.className = `slide-thumbnail slide-type-${slide.slide_type} ${index === 0 ? "active" : ""}`;
+      thumb.textContent = index + 1;
+      thumb.title = slide.title;
+      thumb.onclick = () => goToSlide(index);
+      thumbnailsContainer.appendChild(thumb);
+    });
+
+    // Generate slide list
+    const slideList = document.getElementById("slideList");
+    slideList.innerHTML = "";
+
+    slideSpecs.forEach((slide, index) => {
+      const item = document.createElement("div");
+      item.className = `slide-list-item ${index === 0 ? "active" : ""}`;
+      item.innerHTML = `
+        <div class="flex items-center space-x-3 w-full">
+          <div class="slide-thumbnail slide-type-${slide.slide_type}" style="min-width: 40px; height: 28px; font-size: 0.7rem;">
+            ${index + 1}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-white text-sm font-medium truncate">${slide.title}</div>
+            <div class="text-gray-400 text-xs capitalize">${slide.slide_type}</div>
+          </div>
+        </div>
+      `;
+      item.onclick = () => goToSlide(index);
+      slideList.appendChild(item);
+    });
+
+    updateSlideIndicator();
+  }
+
+  function generateSlideMarkers() {
+    const video = document.getElementById("presentationVideo");
+    const markersContainer = document.getElementById("slideMarkers");
+    markersContainer.innerHTML = "";
+
+    if (!video.duration || slideSpecs.length === 0) return;
+
+    slideSpecs.forEach((slide, index) => {
+      if (index === 0) return; // Skip first slide marker
+
+      const position = (slide.start_time / video.duration) * 100;
+      const marker = document.createElement("div");
+      marker.className = "slide-marker";
+      marker.style.left = `${position}%`;
+      marker.title = slide.title;
+      markersContainer.appendChild(marker);
+    });
+  }
+
+  function updateProgress() {
+    const video = document.getElementById("presentationVideo");
+    const progress = (video.currentTime / video.duration) * 100;
+
+    document.getElementById("progressFill").style.width = `${progress}%`;
+    document.getElementById("currentTime").textContent = formatTime(
+      video.currentTime,
+    );
+  }
+
+  function updateCurrentSlide() {
+    const video = document.getElementById("presentationVideo");
+    const currentTime = video.currentTime;
+
+    // Find current slide based on time
+    let newSlideIndex = 0;
+    for (let i = slideSpecs.length - 1; i >= 0; i--) {
+      if (currentTime >= slideSpecs[i].start_time) {
+        newSlideIndex = i;
+        break;
+      }
+    }
+
+    if (newSlideIndex !== currentSlideIndex) {
+      currentSlideIndex = newSlideIndex;
+      updateSlideHighlights();
+      updateSlideIndicator();
+      showSlideOverlay();
+    }
+  }
+
+  function updateSlideHighlights() {
+    // Update thumbnails
+    document.querySelectorAll(".slide-thumbnail").forEach((thumb, index) => {
+      thumb.classList.toggle("active", index === currentSlideIndex);
+    });
+
+    // Update slide list
+    document.querySelectorAll(".slide-list-item").forEach((item, index) => {
+      item.classList.toggle("active", index === currentSlideIndex);
+    });
+
+    // Scroll thumbnail into view
+    const thumbnails = document.querySelectorAll(".slide-thumbnail");
+    if (thumbnails[currentSlideIndex]) {
+      thumbnails[currentSlideIndex].scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+      });
+    }
+  }
+
+  function updateSlideIndicator() {
+    document.getElementById("slideIndicator").textContent =
+      `Slide ${currentSlideIndex + 1} of ${slideSpecs.length}`;
+
+    if (slideSpecs[currentSlideIndex]) {
+      document.getElementById("currentSlideTitle").textContent =
+        slideSpecs[currentSlideIndex].title;
+      document.getElementById("currentSlideType").textContent =
+        slideSpecs[currentSlideIndex].slide_type;
+    }
+  }
+
+  function showSlideOverlay() {
+    const overlay = document.getElementById("slideOverlay");
+    overlay.classList.remove("opacity-0");
+    overlay.classList.add("opacity-100");
+
+    setTimeout(() => {
+      overlay.classList.remove("opacity-100");
+      overlay.classList.add("opacity-0");
+    }, 2000);
+  }
+
+  function togglePlayPause() {
+    const video = document.getElementById("presentationVideo");
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+
+  function previousSlide() {
+    if (currentSlideIndex > 0) {
+      goToSlide(currentSlideIndex - 1);
+    }
+  }
+
+  function nextSlide() {
+    if (currentSlideIndex < slideSpecs.length - 1) {
+      goToSlide(currentSlideIndex + 1);
+    }
+  }
+
+  function goToSlide(index) {
+    if (index < 0 || index >= slideSpecs.length) return;
+
+    const video = document.getElementById("presentationVideo");
+    video.currentTime = slideSpecs[index].start_time;
+    currentSlideIndex = index;
+    updateSlideHighlights();
+    updateSlideIndicator();
+    showSlideOverlay();
+  }
+
+  function seekVideo(event) {
+    const video = document.getElementById("presentationVideo");
+    const progressBar = document.getElementById("progressBar");
+    const rect = progressBar.getBoundingClientRect();
+    const position = (event.clientX - rect.left) / rect.width;
+    video.currentTime = position * video.duration;
+  }
+
+  function changePlaybackSpeed(speed) {
+    const video = document.getElementById("presentationVideo");
+    video.playbackRate = parseFloat(speed);
+  }
+
+  function toggleMute() {
+    const video = document.getElementById("presentationVideo");
+    video.muted = !video.muted;
+
+    document
+      .getElementById("volumeIcon")
+      .classList.toggle("hidden", video.muted);
+    document
+      .getElementById("muteIcon")
+      .classList.toggle("hidden", !video.muted);
+  }
+
+  function changeVolume(value) {
+    const video = document.getElementById("presentationVideo");
+    video.volume = parseFloat(value);
+
+    if (value == 0) {
+      document.getElementById("volumeIcon").classList.add("hidden");
+      document.getElementById("muteIcon").classList.remove("hidden");
+    } else {
+      document.getElementById("volumeIcon").classList.remove("hidden");
+      document.getElementById("muteIcon").classList.add("hidden");
+    }
+  }
+
+  function toggleFullscreen() {
+    const player = document.getElementById("presentationPlayer");
+
+    if (!document.fullscreenElement) {
+      player.requestFullscreen().catch((err) => {
+        console.error("Fullscreen error:", err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  function toggleSlidePanel() {
+    const panel = document.getElementById("slideListPanel");
+    const openIcon = document.getElementById("panelOpenIcon");
+    const closeIcon = document.getElementById("panelCloseIcon");
+
+    slidePanelOpen = !slidePanelOpen;
+
+    if (slidePanelOpen) {
+      panel.classList.remove("translate-x-full");
+      openIcon.classList.add("hidden");
+      closeIcon.classList.remove("hidden");
+    } else {
+      panel.classList.add("translate-x-full");
+      openIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
+    }
+  }
+
+  function closePresentationPlayer() {
+    const player = document.getElementById("presentationPlayer");
+    const video = document.getElementById("presentationVideo");
+
+    video.pause();
+    player.classList.add("hidden");
+    document.body.style.overflow = "";
+
+    // Remove keyboard listener
+    document.removeEventListener("keydown", handleKeyPress);
+
+    // Exit fullscreen if active
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }
+
+  function handleKeyPress(event) {
+    const player = document.getElementById("presentationPlayer");
+    if (player.classList.contains("hidden")) return;
+
+    switch (event.code) {
+      case "Space":
+        event.preventDefault();
+        togglePlayPause();
+        break;
+      case "ArrowLeft":
+        event.preventDefault();
+        previousSlide();
+        break;
+      case "ArrowRight":
+        event.preventDefault();
+        nextSlide();
+        break;
+      case "KeyF":
+        event.preventDefault();
+        toggleFullscreen();
+        break;
+      case "KeyM":
+        event.preventDefault();
+        toggleMute();
+        break;
+      case "Escape":
+        event.preventDefault();
+        closePresentationPlayer();
+        break;
+    }
+  }
+
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  }
+
+  // Function to play presentation from generated content
+  function playPresentation() {
+    if (!currentGenerationId) {
+      showAlert(
+        "No presentation available. Please generate content first.",
+        "warning",
+      );
+      return;
+    }
+
+    // Default video path - this would be updated based on actual video generation
+    const videoUrl = `/media/videos/educational_presentation/480p15/EducationalPresentation.mp4`;
+
+    // Use slide specs from manim generation if available, otherwise generate from script
+    const slides = currentSlideSpecs || generateDefaultSlides();
+    const title = currentEducationalScript?.title || "Educational Presentation";
+
+    openPresentationPlayer(videoUrl, slides, title);
+  }
+
+  // Store slide specs when manim code is generated
+  let currentSlideSpecs = null;
 </script>
 {% endblock %}

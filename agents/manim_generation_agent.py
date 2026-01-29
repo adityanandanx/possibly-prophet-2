@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 class AnimationType(Enum):
     """Types of Manim animations"""
+
     CREATION = "creation"  # Write, Create, DrawBorderThenFill
     TRANSFORMATION = "transformation"  # Transform, ReplacementTransform, MorphingText
     FADE = "fade"  # FadeIn, FadeOut, FadeTransform
@@ -33,6 +34,7 @@ class AnimationType(Enum):
 
 class SlideType(Enum):
     """Types of presentation slides"""
+
     TITLE = "title"
     OBJECTIVES = "objectives"
     CONCEPT = "concept"
@@ -51,13 +53,14 @@ class SlideType(Enum):
 @dataclass
 class SlideSpec:
     """Specification for a presentation slide"""
+
     slide_type: SlideType
     title: str
     content: Dict[str, Any]
     animations: List[str]
     duration: float  # in seconds
     notes: str  # Speaker notes or additional context
-    
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             "slide_type": self.slide_type.value,
@@ -65,7 +68,7 @@ class SlideSpec:
             "content": self.content,
             "animations": self.animations,
             "duration": self.duration,
-            "notes": self.notes
+            "notes": self.notes,
         }
 
 
@@ -272,18 +275,18 @@ Manim provides predefined colors:
 class ManimGenerationAgent(BaseEducationalAgent):
     """
     Manim Generation Agent with deep knowledge of Manim API and educational design.
-    
+
     This agent analyzes educational scripts and generates optimized Manim code
     with appropriate animations, visual hierarchy, and pedagogical structure.
     """
-    
+
     def __init__(self, **kwargs):
         """Initialize the Manim generation agent"""
         super().__init__("manim_generation", **kwargs)
-        
+
         # Store Manim documentation for context
         self.manim_docs = MANIM_DOCUMENTATION
-        
+
         # Default presentation settings
         self.default_settings = {
             "background_color": "WHITE",
@@ -296,21 +299,21 @@ class ManimGenerationAgent(BaseEducationalAgent):
             "default_wait": 2,
             "animation_run_time": 1.0,
         }
-        
+
         logger.info("Initialized ManimGenerationAgent with Manim documentation")
-    
+
     def generate_presentation(
         self,
         educational_script: Dict[str, Any],
-        style_options: Optional[Dict[str, Any]] = None
+        style_options: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """
         Generate complete Manim presentation from educational script.
-        
+
         Args:
             educational_script: Structured educational content from pedagogy workflow
             style_options: Optional style customization
-            
+
         Returns:
             Dictionary containing:
                 - manim_code: Complete Python code for Manim presentation
@@ -319,32 +322,34 @@ class ManimGenerationAgent(BaseEducationalAgent):
         """
         try:
             logger.info("Starting Manim presentation generation")
-            
+
             # Merge style options with defaults
             settings = {**self.default_settings, **(style_options or {})}
-            
+
             # Step 1: Analyze educational script and plan slides
             slide_plan = self._plan_slides(educational_script)
             logger.info(f"Planned {len(slide_plan)} slides")
-            
+
             # Step 2: Generate Manim code using the agent with full documentation context
             manim_code = self._generate_code_with_agent(
-                educational_script,
-                slide_plan,
-                settings
+                educational_script, slide_plan, settings
             )
-            
+
             # Step 3: Validate generated code
             validation_result = self._validate_manim_code(manim_code)
-            
+
             if not validation_result["valid"]:
-                logger.warning(f"Generated code has issues: {validation_result['errors']}")
+                logger.warning(
+                    f"Generated code has issues: {validation_result['errors']}"
+                )
                 # Attempt to fix common issues
-                manim_code = self._fix_common_issues(manim_code, validation_result["errors"])
-            
+                manim_code = self._fix_common_issues(
+                    manim_code, validation_result["errors"]
+                )
+
             # Step 4: Estimate presentation duration
             duration = self._estimate_duration(manim_code)
-            
+
             return {
                 "manim_code": manim_code,
                 "slide_specs": [s.to_dict() for s in slide_plan],
@@ -353,22 +358,22 @@ class ManimGenerationAgent(BaseEducationalAgent):
                     "estimated_duration_seconds": duration,
                     "settings": settings,
                     "validation": validation_result,
-                    "generation_timestamp": str(__import__("datetime").datetime.now())
-                }
+                    "generation_timestamp": str(__import__("datetime").datetime.now()),
+                },
             }
-            
+
         except Exception as e:
             logger.error(f"Error generating Manim presentation: {str(e)}")
             raise AgentExecutionError(
                 f"Failed to generate Manim presentation: {str(e)}",
                 agent_type="manim_generation",
-                original_error=e
+                original_error=e,
             )
-    
+
     def _plan_slides(self, educational_script: Dict[str, Any]) -> List[SlideSpec]:
         """
         Plan the slide structure based on educational script content.
-        
+
         The agent decides:
         - How many slides to create
         - What type each slide should be
@@ -376,79 +381,91 @@ class ManimGenerationAgent(BaseEducationalAgent):
         - How to pace the content
         """
         slides = []
-        
+
         # Title slide
         title = educational_script.get("title", "Educational Presentation")
-        slides.append(SlideSpec(
-            slide_type=SlideType.TITLE,
-            title=title,
-            content={"subtitle": "Educational Presentation", "author": ""},
-            animations=["Write", "FadeIn"],
-            duration=3.0,
-            notes="Opening title slide with presentation title"
-        ))
-        
+        slides.append(
+            SlideSpec(
+                slide_type=SlideType.TITLE,
+                title=title,
+                content={"subtitle": "Educational Presentation", "author": ""},
+                animations=["Write", "FadeIn"],
+                duration=3.0,
+                notes="Opening title slide with presentation title",
+            )
+        )
+
         # Learning objectives slide
         objectives = educational_script.get("learning_objectives", [])
         if objectives:
-            slides.append(SlideSpec(
-                slide_type=SlideType.OBJECTIVES,
-                title="Learning Objectives",
-                content={"objectives": self._extract_objectives(objectives)},
-                animations=["Write", "LaggedStart", "FadeIn"],
-                duration=5.0,
-                notes="Display learning objectives with staggered animation"
-            ))
-        
+            slides.append(
+                SlideSpec(
+                    slide_type=SlideType.OBJECTIVES,
+                    title="Learning Objectives",
+                    content={"objectives": self._extract_objectives(objectives)},
+                    animations=["Write", "LaggedStart", "FadeIn"],
+                    duration=5.0,
+                    notes="Display learning objectives with staggered animation",
+                )
+            )
+
         # Content slides from sections
         sections = educational_script.get("sections", [])
         for i, section in enumerate(sections):
             section_slides = self._plan_section_slides(section, i)
             slides.extend(section_slides)
-        
+
         # Assessment slide if available
         assessments = educational_script.get("assessments", [])
         if assessments:
-            slides.append(SlideSpec(
-                slide_type=SlideType.ASSESSMENT,
-                title="Knowledge Check",
-                content={"questions": assessments[:2]},  # Limit to 2 questions
-                animations=["Write", "FadeIn", "Indicate"],
-                duration=6.0,
-                notes="Interactive assessment questions"
-            ))
-        
+            slides.append(
+                SlideSpec(
+                    slide_type=SlideType.ASSESSMENT,
+                    title="Knowledge Check",
+                    content={"questions": assessments[:2]},  # Limit to 2 questions
+                    animations=["Write", "FadeIn", "Indicate"],
+                    duration=6.0,
+                    notes="Interactive assessment questions",
+                )
+            )
+
         # Summary slide
-        slides.append(SlideSpec(
-            slide_type=SlideType.SUMMARY,
-            title="Key Takeaways",
-            content={"points": self._extract_key_points(educational_script)},
-            animations=["Write", "LaggedStart"],
-            duration=4.0,
-            notes="Summarize main learning points"
-        ))
-        
+        slides.append(
+            SlideSpec(
+                slide_type=SlideType.SUMMARY,
+                title="Key Takeaways",
+                content={"points": self._extract_key_points(educational_script)},
+                animations=["Write", "LaggedStart"],
+                duration=4.0,
+                notes="Summarize main learning points",
+            )
+        )
+
         # Conclusion slide
-        slides.append(SlideSpec(
-            slide_type=SlideType.CONCLUSION,
-            title="Thank You!",
-            content={"message": "Questions?"},
-            animations=["Write", "FadeIn"],
-            duration=3.0,
-            notes="Closing slide"
-        ))
-        
+        slides.append(
+            SlideSpec(
+                slide_type=SlideType.CONCLUSION,
+                title="Thank You!",
+                content={"message": "Questions?"},
+                animations=["Write", "FadeIn"],
+                duration=3.0,
+                notes="Closing slide",
+            )
+        )
+
         return slides
-    
-    def _plan_section_slides(self, section: Dict[str, Any], index: int) -> List[SlideSpec]:
+
+    def _plan_section_slides(
+        self, section: Dict[str, Any], index: int
+    ) -> List[SlideSpec]:
         """Plan slides for a content section"""
         slides = []
-        
+
         title = section.get("title", f"Section {index + 1}")
         content = section.get("content", "")
         key_concepts = section.get("key_concepts", [])
         section_type = section.get("section_type", "main_concept")
-        
+
         # Determine slide type based on content analysis
         if "example" in title.lower() or "example" in section_type:
             slide_type = SlideType.EXAMPLE
@@ -456,7 +473,10 @@ class ManimGenerationAgent(BaseEducationalAgent):
         elif "definition" in title.lower() or "definition" in section_type:
             slide_type = SlideType.DEFINITION
             animations = ["Write", "FadeIn", "Circumscribe"]
-        elif any(math_term in content.lower() for math_term in ["equation", "formula", "=", "∑", "∫"]):
+        elif any(
+            math_term in content.lower()
+            for math_term in ["equation", "formula", "=", "∑", "∫"]
+        ):
             slide_type = SlideType.EQUATION
             animations = ["Write", "TransformMatchingTex", "Indicate"]
         elif "compare" in title.lower() or "vs" in title.lower():
@@ -465,86 +485,96 @@ class ManimGenerationAgent(BaseEducationalAgent):
         else:
             slide_type = SlideType.CONCEPT
             animations = ["Write", "FadeIn", "LaggedStart"]
-        
+
         # Main section slide
-        slides.append(SlideSpec(
-            slide_type=slide_type,
-            title=title,
-            content={
-                "text": content,
-                "key_concepts": key_concepts[:5]  # Limit concepts per slide
-            },
-            animations=animations,
-            duration=self._estimate_content_duration(content),
-            notes=f"Section {index + 1}: {title}"
-        ))
-        
+        slides.append(
+            SlideSpec(
+                slide_type=slide_type,
+                title=title,
+                content={
+                    "text": content,
+                    "key_concepts": key_concepts[:5],  # Limit concepts per slide
+                },
+                animations=animations,
+                duration=self._estimate_content_duration(content),
+                notes=f"Section {index + 1}: {title}",
+            )
+        )
+
         # Add sub-slides for long content
         if len(content) > 500:
             # Split into multiple slides
             subsections = section.get("subsections", [])
             for sub in subsections[:3]:  # Limit subsections
-                slides.append(SlideSpec(
-                    slide_type=SlideType.CONCEPT,
-                    title=sub.get("title", "Details"),
-                    content={"text": sub.get("content", "")},
-                    animations=["Write", "FadeIn"],
-                    duration=self._estimate_content_duration(sub.get("content", "")),
-                    notes=f"Subsection of {title}"
-                ))
-        
+                slides.append(
+                    SlideSpec(
+                        slide_type=SlideType.CONCEPT,
+                        title=sub.get("title", "Details"),
+                        content={"text": sub.get("content", "")},
+                        animations=["Write", "FadeIn"],
+                        duration=self._estimate_content_duration(
+                            sub.get("content", "")
+                        ),
+                        notes=f"Subsection of {title}",
+                    )
+                )
+
         return slides
-    
+
     def _generate_code_with_agent(
         self,
         educational_script: Dict[str, Any],
         slide_plan: List[SlideSpec],
-        settings: Dict[str, Any]
+        settings: Dict[str, Any],
     ) -> str:
         """
         Use the AI agent to generate Manim code with full context.
         """
         # Prepare comprehensive prompt for the agent
         prompt = self._build_generation_prompt(educational_script, slide_plan, settings)
-        
+
         try:
             # Call the agent with the prompt
             result = self.agent(prompt)
-            
+
             # Extract code from result
-            if hasattr(result, 'message') and hasattr(result.message, 'content'):
+            if hasattr(result, "message") and hasattr(result.message, "content"):
                 response_text = ""
                 for block in result.message.content:
-                    if hasattr(block, 'text'):
+                    if hasattr(block, "text"):
                         response_text += block.text
-                
+
                 # Extract Python code from response
                 code = self._extract_code_from_response(response_text)
                 if code:
                     return code
-            
+
             # Fallback to string conversion
             response_str = str(result)
             code = self._extract_code_from_response(response_str)
             if code:
                 return code
-                
+
             # If no code extracted, generate fallback
             logger.warning("Could not extract code from agent response, using fallback")
-            return self._generate_fallback_code(educational_script, slide_plan, settings)
-            
+            return self._generate_fallback_code(
+                educational_script, slide_plan, settings
+            )
+
         except Exception as e:
             logger.error(f"Agent code generation failed: {str(e)}")
-            return self._generate_fallback_code(educational_script, slide_plan, settings)
-    
+            return self._generate_fallback_code(
+                educational_script, slide_plan, settings
+            )
+
     def _build_generation_prompt(
         self,
         educational_script: Dict[str, Any],
         slide_plan: List[SlideSpec],
-        settings: Dict[str, Any]
+        settings: Dict[str, Any],
     ) -> str:
         """Build comprehensive prompt for Manim code generation"""
-        
+
         # Convert slide plan to readable format
         slide_descriptions = []
         for i, slide in enumerate(slide_plan):
@@ -554,7 +584,7 @@ class ManimGenerationAgent(BaseEducationalAgent):
                 f"   Suggested animations: {', '.join(slide.animations)}\n"
                 f"   Duration: {slide.duration}s"
             )
-        
+
         prompt = f"""You are an expert Manim developer creating an educational presentation.
 
 ## MANIM DOCUMENTATION REFERENCE
@@ -598,224 +628,245 @@ Return ONLY the Python code wrapped in ```python and ``` markers. No explanation
 Generate the complete Manim code now:"""
 
         return prompt
-    
+
     def _extract_code_from_response(self, response: str) -> Optional[str]:
         """Extract Python code from agent response"""
         # Try to find code blocks
         code_patterns = [
-            r'```python\n(.*?)```',
-            r'```\n(.*?)```',
-            r'from manim import \*(.*?)(?=```|$)',
+            r"```python\n(.*?)```",
+            r"```\n(.*?)```",
+            r"from manim import \*(.*?)(?=```|$)",
         ]
-        
+
         for pattern in code_patterns:
             matches = re.findall(pattern, response, re.DOTALL)
             if matches:
                 code = matches[0].strip()
                 # Ensure it has the import
-                if 'from manim import' not in code:
-                    code = 'from manim import *\n\n' + code
+                if "from manim import" not in code:
+                    code = "from manim import *\n\n" + code
                 return code
-        
+
         # Check if the response itself looks like code
-        if 'from manim import' in response and 'class' in response and 'def construct' in response:
+        if (
+            "from manim import" in response
+            and "class" in response
+            and "def construct" in response
+        ):
             # Try to extract just the code portion
-            start = response.find('from manim import')
+            start = response.find("from manim import")
             if start != -1:
                 return response[start:].strip()
-        
+
         return None
-    
+
     def _generate_fallback_code(
         self,
         educational_script: Dict[str, Any],
         slide_plan: List[SlideSpec],
-        settings: Dict[str, Any]
+        settings: Dict[str, Any],
     ) -> str:
         """Generate fallback Manim code if agent fails"""
-        
+
         code_parts = [
-            'from manim import *\n',
-            '\n',
-            'class EducationalPresentation(Scene):',
+            "from manim import *\n",
+            "\n",
+            "class EducationalPresentation(Scene):",
             '    """Generated educational presentation"""',
-            '    ',
-            '    def construct(self):',
+            "    ",
+            "    def construct(self):",
             '        """Main presentation construction"""',
             f'        self.camera.background_color = {settings["background_color"]}',
-            '        ',
+            "        ",
         ]
-        
+
         for i, slide in enumerate(slide_plan):
-            code_parts.append(f'        # Slide {i+1}: {slide.title}')
+            code_parts.append(f"        # Slide {i+1}: {slide.title}")
             code_parts.extend(self._generate_slide_code(slide, settings, i))
-            code_parts.append('        ')
-        
-        return '\n'.join(code_parts)
-    
+            code_parts.append("        ")
+
+        return "\n".join(code_parts)
+
     def _generate_slide_code(
-        self,
-        slide: SlideSpec,
-        settings: Dict[str, Any],
-        index: int
+        self, slide: SlideSpec, settings: Dict[str, Any], index: int
     ) -> List[str]:
         """Generate code for a single slide"""
         code_lines = []
         var_prefix = f"slide_{index}"
-        
+
         title = self._clean_text(slide.title)
-        
+
         if slide.slide_type == SlideType.TITLE:
-            code_lines.extend([
-                f'        {var_prefix}_title = Text("{title}", font_size={settings["title_font_size"]}, color={settings["title_color"]})',
-                f'        {var_prefix}_subtitle = Text("{self._clean_text(slide.content.get("subtitle", ""))}", font_size={settings["subtitle_font_size"]}, color=GRAY)',
-                f'        {var_prefix}_subtitle.next_to({var_prefix}_title, DOWN, buff=0.5)',
-                f'        ',
-                f'        self.play(Write({var_prefix}_title))',
-                f'        self.play(FadeIn({var_prefix}_subtitle))',
-                f'        self.wait({slide.duration})',
-                f'        self.play(FadeOut({var_prefix}_title), FadeOut({var_prefix}_subtitle))',
-            ])
-            
+            code_lines.extend(
+                [
+                    f'        {var_prefix}_title = Text("{title}", font_size={settings["title_font_size"]}, color={settings["title_color"]})',
+                    f'        {var_prefix}_subtitle = Text("{self._clean_text(slide.content.get("subtitle", ""))}", font_size={settings["subtitle_font_size"]}, color=GRAY)',
+                    f"        {var_prefix}_subtitle.next_to({var_prefix}_title, DOWN, buff=0.5)",
+                    f"        ",
+                    f"        self.play(Write({var_prefix}_title))",
+                    f"        self.play(FadeIn({var_prefix}_subtitle))",
+                    f"        self.wait({slide.duration})",
+                    f"        self.play(FadeOut({var_prefix}_title), FadeOut({var_prefix}_subtitle))",
+                ]
+            )
+
         elif slide.slide_type == SlideType.OBJECTIVES:
             objectives = slide.content.get("objectives", [])[:5]
-            code_lines.extend([
-                f'        {var_prefix}_title = Text("{title}", font_size={settings["subtitle_font_size"]}, color={settings["title_color"]})',
-                f'        {var_prefix}_title.to_edge(UP)',
-                f'        self.play(Write({var_prefix}_title))',
-                f'        ',
-            ])
-            
+            code_lines.extend(
+                [
+                    f'        {var_prefix}_title = Text("{title}", font_size={settings["subtitle_font_size"]}, color={settings["title_color"]})',
+                    f"        {var_prefix}_title.to_edge(UP)",
+                    f"        self.play(Write({var_prefix}_title))",
+                    f"        ",
+                ]
+            )
+
             for j, obj in enumerate(objectives):
                 obj_text = self._clean_text(str(obj)[:80])
-                code_lines.extend([
-                    f'        {var_prefix}_obj_{j} = Text("• {obj_text}", font_size=24, color={settings["text_color"]})',
-                    f'        {var_prefix}_obj_{j}.next_to({var_prefix}_title, DOWN, buff={0.8 + j * 0.6})',
-                    f'        {var_prefix}_obj_{j}.align_to({var_prefix}_title, LEFT)',
-                    f'        self.play(FadeIn({var_prefix}_obj_{j}, shift=RIGHT))',
-                ])
-            
-            code_lines.extend([
-                f'        self.wait({slide.duration})',
-                f'        self.play(*[FadeOut(mob) for mob in self.mobjects])',
-            ])
-            
+                code_lines.extend(
+                    [
+                        f'        {var_prefix}_obj_{j} = Text("• {obj_text}", font_size=24, color={settings["text_color"]})',
+                        f"        {var_prefix}_obj_{j}.next_to({var_prefix}_title, DOWN, buff={0.8 + j * 0.6})",
+                        f"        {var_prefix}_obj_{j}.align_to({var_prefix}_title, LEFT)",
+                        f"        self.play(FadeIn({var_prefix}_obj_{j}, shift=RIGHT))",
+                    ]
+                )
+
+            code_lines.extend(
+                [
+                    f"        self.wait({slide.duration})",
+                    f"        self.play(*[FadeOut(mob) for mob in self.mobjects])",
+                ]
+            )
+
         elif slide.slide_type == SlideType.CONCLUSION:
-            code_lines.extend([
-                f'        {var_prefix}_text = Text("{title}", font_size={settings["title_font_size"]}, color={settings["title_color"]})',
-                f'        {var_prefix}_sub = Text("{self._clean_text(slide.content.get("message", ""))}", font_size={settings["subtitle_font_size"]}, color=GRAY)',
-                f'        {var_prefix}_sub.next_to({var_prefix}_text, DOWN, buff=0.5)',
-                f'        ',
-                f'        self.play(Write({var_prefix}_text))',
-                f'        self.play(FadeIn({var_prefix}_sub))',
-                f'        self.wait({slide.duration})',
-            ])
-            
+            code_lines.extend(
+                [
+                    f'        {var_prefix}_text = Text("{title}", font_size={settings["title_font_size"]}, color={settings["title_color"]})',
+                    f'        {var_prefix}_sub = Text("{self._clean_text(slide.content.get("message", ""))}", font_size={settings["subtitle_font_size"]}, color=GRAY)',
+                    f"        {var_prefix}_sub.next_to({var_prefix}_text, DOWN, buff=0.5)",
+                    f"        ",
+                    f"        self.play(Write({var_prefix}_text))",
+                    f"        self.play(FadeIn({var_prefix}_sub))",
+                    f"        self.wait({slide.duration})",
+                ]
+            )
+
         else:
             # Generic slide type (CONCEPT, EXAMPLE, DEFINITION, etc.)
             content_text = self._clean_text(str(slide.content.get("text", ""))[:300])
             content_lines = self._split_text_for_display(content_text)
-            
-            code_lines.extend([
-                f'        {var_prefix}_title = Text("{title}", font_size={settings["subtitle_font_size"]}, color={settings["title_color"]})',
-                f'        {var_prefix}_title.to_edge(UP)',
-                f'        self.play(Write({var_prefix}_title))',
-                f'        ',
-            ])
-            
+
+            code_lines.extend(
+                [
+                    f'        {var_prefix}_title = Text("{title}", font_size={settings["subtitle_font_size"]}, color={settings["title_color"]})',
+                    f"        {var_prefix}_title.to_edge(UP)",
+                    f"        self.play(Write({var_prefix}_title))",
+                    f"        ",
+                ]
+            )
+
             for j, line in enumerate(content_lines[:5]):
-                code_lines.extend([
-                    f'        {var_prefix}_line_{j} = Text("{line}", font_size=20, color={settings["text_color"]})',
-                    f'        {var_prefix}_line_{j}.next_to({var_prefix}_title, DOWN, buff={1.0 + j * 0.5})',
-                    f'        {var_prefix}_line_{j}.align_to({var_prefix}_title, LEFT)',
-                    f'        self.play(Write({var_prefix}_line_{j}))',
-                ])
-            
+                code_lines.extend(
+                    [
+                        f'        {var_prefix}_line_{j} = Text("{line}", font_size=20, color={settings["text_color"]})',
+                        f"        {var_prefix}_line_{j}.next_to({var_prefix}_title, DOWN, buff={1.0 + j * 0.5})",
+                        f"        {var_prefix}_line_{j}.align_to({var_prefix}_title, LEFT)",
+                        f"        self.play(Write({var_prefix}_line_{j}))",
+                    ]
+                )
+
             # Add key concepts if available
             key_concepts = slide.content.get("key_concepts", [])[:3]
             if key_concepts:
-                code_lines.append(f'        ')
+                code_lines.append(f"        ")
                 for k, concept in enumerate(key_concepts):
                     concept_text = self._clean_text(str(concept)[:50])
-                    code_lines.extend([
-                        f'        {var_prefix}_concept_{k} = Text("→ {concept_text}", font_size=18, color={settings["accent_color"]})',
-                        f'        {var_prefix}_concept_{k}.to_edge(DOWN, buff={1.5 - k * 0.4})',
-                        f'        self.play(FadeIn({var_prefix}_concept_{k}))',
-                    ])
-            
-            code_lines.extend([
-                f'        self.wait({slide.duration})',
-                f'        self.play(*[FadeOut(mob) for mob in self.mobjects])',
-            ])
-        
+                    code_lines.extend(
+                        [
+                            f'        {var_prefix}_concept_{k} = Text("→ {concept_text}", font_size=18, color={settings["accent_color"]})',
+                            f"        {var_prefix}_concept_{k}.to_edge(DOWN, buff={1.5 - k * 0.4})",
+                            f"        self.play(FadeIn({var_prefix}_concept_{k}))",
+                        ]
+                    )
+
+            code_lines.extend(
+                [
+                    f"        self.wait({slide.duration})",
+                    f"        self.play(*[FadeOut(mob) for mob in self.mobjects])",
+                ]
+            )
+
         return code_lines
-    
+
     def _validate_manim_code(self, code: str) -> Dict[str, Any]:
         """Validate generated Manim code"""
         errors = []
         warnings = []
-        
+
         # Check for syntax errors
         try:
-            compile(code, '<string>', 'exec')
+            compile(code, "<string>", "exec")
         except SyntaxError as e:
             errors.append(f"Syntax error at line {e.lineno}: {e.msg}")
-        
+
         # Check for required elements
         required_elements = [
-            ('from manim import', 'Missing Manim import'),
-            ('class', 'Missing Scene class definition'),
-            ('def construct', 'Missing construct method'),
+            ("from manim import", "Missing Manim import"),
+            ("class", "Missing Scene class definition"),
+            ("def construct", "Missing construct method"),
         ]
-        
+
         for element, message in required_elements:
             if element not in code:
                 errors.append(message)
-        
+
         # Check for common issues
-        if 'self.play' not in code:
+        if "self.play" not in code:
             warnings.append("No animations found - presentation may be static")
-        
-        if 'self.wait' not in code:
+
+        if "self.wait" not in code:
             warnings.append("No wait statements - presentation may be too fast")
-        
+
         return {
             "valid": len(errors) == 0,
             "errors": errors,
             "warnings": warnings,
-            "line_count": len(code.split('\n'))
+            "line_count": len(code.split("\n")),
         }
-    
+
     def _fix_common_issues(self, code: str, errors: List[str]) -> str:
         """Attempt to fix common code issues"""
         fixed_code = code
-        
+
         # Add missing import
-        if 'Missing Manim import' in str(errors):
-            if 'from manim import' not in fixed_code:
-                fixed_code = 'from manim import *\n\n' + fixed_code
-        
+        if "Missing Manim import" in str(errors):
+            if "from manim import" not in fixed_code:
+                fixed_code = "from manim import *\n\n" + fixed_code
+
         # Fix unescaped quotes in strings
-        fixed_code = re.sub(r'Text\("([^"]*)"([^"]*)"([^"]*)"\)', 
-                           lambda m: f'Text("{m.group(1)}\'{m.group(2)}\'{m.group(3)}")', 
-                           fixed_code)
-        
+        fixed_code = re.sub(
+            r'Text\("([^"]*)"([^"]*)"([^"]*)"\)',
+            lambda m: f"Text(\"{m.group(1)}'{m.group(2)}'{m.group(3)}\")",
+            fixed_code,
+        )
+
         return fixed_code
-    
+
     def _estimate_duration(self, code: str) -> int:
         """Estimate total presentation duration from code"""
         total = 0
-        
+
         # Count wait statements
-        wait_matches = re.findall(r'self\.wait\((\d+(?:\.\d+)?)\)', code)
+        wait_matches = re.findall(r"self\.wait\((\d+(?:\.\d+)?)\)", code)
         total += sum(float(w) for w in wait_matches)
-        
+
         # Estimate animation time
-        play_count = len(re.findall(r'self\.play\(', code))
+        play_count = len(re.findall(r"self\.play\(", code))
         total += play_count * 1.0  # ~1 second per animation
-        
+
         return int(total)
-    
+
     def _extract_objectives(self, objectives: List[Any]) -> List[str]:
         """Extract objective strings from various formats"""
         result = []
@@ -825,66 +876,68 @@ Generate the complete Manim code now:"""
             else:
                 result.append(str(obj))
         return result
-    
+
     def _extract_key_points(self, educational_script: Dict[str, Any]) -> List[str]:
         """Extract key points for summary slide"""
         points = []
-        
+
         # From learning objectives
         for obj in educational_script.get("learning_objectives", [])[:2]:
             if isinstance(obj, dict):
                 points.append(obj.get("objective", str(obj)))
             else:
                 points.append(str(obj))
-        
+
         # From sections
         for section in educational_script.get("sections", [])[:3]:
             title = section.get("title", "")
             if title:
                 points.append(title)
-        
+
         return points[:5]
-    
+
     def _estimate_content_duration(self, content: str) -> float:
         """Estimate reading time for content"""
         if not content:
             return 3.0
-        
+
         word_count = len(content.split())
         # Average reading speed: ~150 words per minute for educational content
         # Plus time for animations
         return max(3.0, min(8.0, (word_count / 150) * 60 + 2))
-    
+
     def _clean_text(self, text: str, max_length: int = 100) -> str:
         """Clean and prepare text for Manim code"""
         if not text:
             return ""
-        
+
         # Remove or escape problematic characters
         text = text.replace('"', "'")
-        text = text.replace('\\', '\\\\')
-        text = text.replace('\n', ' ')
-        text = text.replace('\r', ' ')
-        text = text.replace('\t', ' ')
-        text = re.sub(r'\s+', ' ', text)
+        text = text.replace("\\", "\\\\")
+        text = text.replace("\n", " ")
+        text = text.replace("\r", " ")
+        text = text.replace("\t", " ")
+        text = re.sub(r"\s+", " ", text)
         text = text.strip()
-        
+
         # Truncate if needed
         if len(text) > max_length:
-            text = text[:max_length-3] + "..."
-        
+            text = text[: max_length - 3] + "..."
+
         return text
-    
-    def _split_text_for_display(self, text: str, max_line_length: int = 60) -> List[str]:
+
+    def _split_text_for_display(
+        self, text: str, max_line_length: int = 60
+    ) -> List[str]:
         """Split text into lines for slide display"""
         if not text:
             return [""]
-        
+
         words = text.split()
         lines = []
         current_line = []
         current_length = 0
-        
+
         for word in words:
             if current_length + len(word) + 1 <= max_line_length:
                 current_line.append(word)
@@ -894,8 +947,8 @@ Generate the complete Manim code now:"""
                     lines.append(" ".join(current_line))
                 current_line = [word]
                 current_length = len(word)
-        
+
         if current_line:
             lines.append(" ".join(current_line))
-        
+
         return lines or [""]
